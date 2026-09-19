@@ -1,0 +1,24 @@
+{
+  "name": "wedding-yusheng",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vue-tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": { "vue": "3.5.43" },
+  "devDependencies": {
+    "@openai/sites-vite-plugin": "0.2.0",
+    "@types/node": "22.19.19",
+    "@vitejs/plugin-vue": "6.0.9",
+    "oxlint": "1.76.0",
+    "oxlint-tsgolint": "7.0.2001",
+    "typescript": "5.9.3",
+    "vite": "8.0.13",
+    "vue-tsc": "3.3.11"
+  }
+}

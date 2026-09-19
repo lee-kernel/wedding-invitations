@@ -1,0 +1,122 @@
+{
+  "family": "Noto Serif SC",
+  "weight": 400,
+  "style": "normal",
+  "characters": "0123456789.:",
+  "cssSource": "https://fonts.googleapis.com/css2?family=Noto+Serif+SC%3Awght%40400&display=swap&text=0123456789.%3A",
+  "fontSource": "https://fonts.gstatic.com/l/font?kit=H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7SCqyWq847hdT2Cc0rksGr55tOxVYJRm2g&skey=37fe335b8fd815cc&v=v35",
+  "license": "public/fonts/OFL.txt",
+  "bytes": 2216,
+  "sha256": "cd959fb4ef7c3034e3c13ba8f3e8c720b5b18e477df670308f9e2464a4bb97fd",
+  "italicAngle": 0.0,
+  "metrics": {
+    "0": {
+      "bounds": [
+        47,
+        -15,
+        509,
+        743
+      ],
+      "advance": 557
+    },
+    "1": {
+      "bounds": [
+        70,
+        -1,
+        427,
+        738
+      ],
+      "advance": 471
+    },
+    "2": {
+      "bounds": [
+        64,
+        0,
+        511,
+        743
+      ],
+      "advance": 558
+    },
+    "3": {
+      "bounds": [
+        47,
+        -15,
+        493,
+        743
+      ],
+      "advance": 557
+    },
+    "4": {
+      "bounds": [
+        34,
+        -18,
+        534,
+        739
+      ],
+      "advance": 555
+    },
+    "5": {
+      "bounds": [
+        44,
+        -15,
+        502,
+        728
+      ],
+      "advance": 558
+    },
+    "6": {
+      "bounds": [
+        56,
+        -15,
+        509,
+        743
+      ],
+      "advance": 558
+    },
+    "7": {
+      "bounds": [
+        55,
+        0,
+        488,
+        728
+      ],
+      "advance": 549
+    },
+    "8": {
+      "bounds": [
+        57,
+        -15,
+        503,
+        743
+      ],
+      "advance": 558
+    },
+    "9": {
+      "bounds": [
+        53,
+        -16,
+        506,
+        743
+      ],
+      "advance": 562
+    },
+    ".": {
+      "bounds": [
+        102,
+        -15,
+        225,
+        108
+      ],
+      "advance": 327
+    },
+    ":": {
+      "bounds": [
+        102,
+        -15,
+        225,
+        504
+      ],
+      "advance": 327
+    }
+  }
+}

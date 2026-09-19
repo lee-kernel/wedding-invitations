@@ -1,0 +1,125 @@
+{
+  "repo": "https://github.com/lxgw/LxgwWenkaiGB",
+  "release": "https://github.com/lxgw/LxgwWenkaiGB/releases/tag/v1.522",
+  "version": "v1.522",
+  "font_url": "https://github.com/lxgw/LxgwWenkaiGB/releases/download/v1.522/LXGWWenKaiGB-Regular.ttf",
+  "license_url": "https://raw.githubusercontent.com/lxgw/LxgwWenkaiGB/v1.522/OFL.txt",
+  "font_bytes": 25819540,
+  "font_sha256": "295568c131648062107543aa159c97dd49564be791136c2abf74cad83eba3f7f",
+  "fonttools_version": "4.64.0",
+  "glyph_checks": [
+    {
+      "character": "汪",
+      "unicode": "U+6C6A",
+      "glyph": "u6C6A",
+      "contours": 4
+    },
+    {
+      "character": "家",
+      "unicode": "U+5BB6",
+      "glyph": "u5BB6",
+      "contours": 2
+    },
+    {
+      "character": "喆",
+      "unicode": "U+5586",
+      "glyph": "u5586",
+      "contours": 6
+    },
+    {
+      "character": "朱",
+      "unicode": "U+6731",
+      "glyph": "u6731",
+      "contours": 1
+    },
+    {
+      "character": "敏",
+      "unicode": "U+654F",
+      "glyph": "u654F",
+      "contours": 7
+    },
+    {
+      "character": "囍",
+      "unicode": "U+56CD",
+      "glyph": "u56CD",
+      "contours": 11
+    },
+    {
+      "character": "&",
+      "unicode": "U+0026",
+      "glyph": "ampersand",
+      "contours": 3
+    }
+  ],
+  "font_names": {
+    "1": [
+      "LXGW WenKai GB",
+      "霞鹜文楷 GB"
+    ],
+    "2": [
+      "Regular"
+    ],
+    "5": [
+      "Version 1.522; March 17, 2026"
+    ],
+    "6": [
+      "LXGWWenKaiGB-Regular"
+    ],
+    "13": [
+      "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+    ],
+    "14": [
+      "https://openfontlicense.org"
+    ]
+  },
+  "subset_proof": {
+    "path": "signature-proof.woff2",
+    "flavor": "woff2",
+    "bytes": 2800,
+    "sha256": "4ecb3d486cb4d50c97fb9232cb5eade92cd99f11c01337e01da483d8d17000a2",
+    "glyph_checks": [
+      {
+        "character": "汪",
+        "unicode": "U+6C6A",
+        "glyph": "uni6C6A",
+        "contours": 4
+      },
+      {
+        "character": "家",
+        "unicode": "U+5BB6",
+        "glyph": "uni5BB6",
+        "contours": 2
+      },
+      {
+        "character": "喆",
+        "unicode": "U+5586",
+        "glyph": "uni5586",
+        "contours": 6
+      },
+      {
+        "character": "朱",
+        "unicode": "U+6731",
+        "glyph": "uni6731",
+        "contours": 1
+      },
+      {
+        "character": "敏",
+        "unicode": "U+654F",
+        "glyph": "uni654F",
+        "contours": 7
+      },
+      {
+        "character": "囍",
+        "unicode": "U+56CD",
+        "glyph": "uni56CD",
+        "contours": 11
+      },
+      {
+        "character": "&",
+        "unicode": "U+0026",
+        "glyph": "ampersand",
+        "contours": 3
+      }
+    ]
+  }
+}

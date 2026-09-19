@@ -1,0 +1,368 @@
+:root {
+  --paper: #f3efe5;
+  --paper-light: #faf7f0;
+  --ink: #342e27;
+  --red: #902e2c;
+  --muted-ink: #756b60;
+  --line: #c8bfb0;
+  --serif: 'Letter Serif', 'Songti SC', 'STSong', 'Noto Serif CJK SC', serif;
+  --sans: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --display: Georgia, 'Times New Roman', serif;
+  --numerals: 'Wedding Numerals', 'Times New Roman', serif;
+  color-scheme: light;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 85px;
+  background: var(--paper);
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 70;
+  opacity: 0.1;
+  background-image: url('/wedding/paper-grain.svg');
+}
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgb(0 0 0 / 10%);
+  backdrop-filter: blur(2px);
+}
+[data-slot='dialog-content'] {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 51;
+  transform: translate(-50%, -50%);
+  outline: none;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 6px;
+}
+::selection {
+  background: var(--red);
+  color: var(--paper);
+}
+h1,
+h2,
+p {
+  margin: 0;
+}
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 14px;
+  background: var(--red);
+  color: white;
+  z-index: 100;
+  transform: translateY(-160%);
+}
+.skip-link:focus {
+  transform: none;
+}
+.site-header {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 100px;
+  margin: 0 4.2%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+}
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--serif);
+  font-size: 23px;
+  letter-spacing: 0.08em;
+  color: var(--red);
+}
+.wordmark > span:not(.wordmark-en) {
+  font-size: 15px;
+}
+.wordmark-en {
+  display: block;
+  max-width: 90px;
+  margin-left: 15px;
+  font: 10px/1.45 var(--sans);
+  letter-spacing: 0.16em;
+}
+.header-date {
+  font-size: 11px;
+  letter-spacing: 0.19em;
+  margin-left: -7%;
+}
+.header-invite {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.header-invite span {
+  font-size: 23px;
+  transition: transform 0.25s;
+}
+.header-invite:hover span {
+  transform: translate(3px, -3px);
+}
+.invitation {
+  background: var(--paper-light);
+  position: relative;
+  padding: 40px 7% 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 0;
+}
+.invitation-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted-ink);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+.invitation-main {
+  padding: 90px 6% 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12%;
+}
+.invitation-heading h2 {
+  font: 400 clamp(50px, 4.5vw, 76px)/1.35 var(--serif);
+  letter-spacing: 0.02em;
+  margin-top: 25px;
+}
+.invitation-heading h2 span {
+  color: var(--red);
+}
+.invitation-heading > p {
+  margin-top: 34px;
+  font-size: 15px;
+  line-height: 2.1;
+  color: var(--muted-ink);
+}
+.couple-signature {
+  margin-top: 40px;
+  color: var(--red);
+  font-family: var(--serif);
+  font-size: 24px;
+  letter-spacing: 0.2em;
+}
+.couple-signature i {
+  font-family: var(--display);
+  font-weight: 400;
+  margin: 0 8px;
+}
+.couple-signature span {
+  font-size: 12px;
+  margin-left: 20px;
+}
+.invitation-details {
+  text-align: center;
+  align-self: center;
+  border-left: 1px solid var(--line);
+  padding-left: 18%;
+}
+.invitation {
+  --ink: #000;
+  --muted-ink: #000;
+  color: var(--ink);
+}
+.date-display > span {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+}
+.date-display strong {
+  display: block;
+  font: normal 400 clamp(90px, 8vw, 122px)/1.3 var(--numerals);
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: nowrap;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+.date-display strong > span,
+.date-display strong > i {
+  color: inherit;
+}
+.date-display strong > i {
+  font: inherit;
+}
+.date-display strong > em,
+.schedule div > span > em {
+  font: inherit;
+  color: var(--red);
+}
+.schedule {
+  margin: 38px 0 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 38px;
+}
+.schedule div > span {
+  font: normal 400 36px/1.4 var(--numerals);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.schedule p {
+  font-size: 12px;
+  margin-top: 8px;
+  letter-spacing: 0.12em;
+  color: var(--muted-ink);
+}
+.schedule i {
+  height: 30px;
+  width: 1px;
+  background: var(--line);
+}
+.venue {
+  padding: 27px 0;
+  border-top: 1px solid var(--line);
+}
+.venue p {
+  font: 22px/1.6 var(--serif);
+}
+.venue > span {
+  display: block;
+  font-size: 14px;
+  margin-top: 9px;
+}
+.invite-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.map-options {
+  text-align: left;
+  font-size: 13px;
+}
+.map-options summary {
+  cursor: pointer;
+  padding: 14px 20px;
+  min-height: 44px;
+  color: var(--muted-ink);
+}
+.map-options nav {
+  padding: 0 20px;
+  border-top: 1px solid var(--line);
+}
+.map-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.map-option a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  gap: 8px;
+  color: var(--red);
+}
+.map-option a + a,
+.map-option span {
+  font-size: 11px;
+  color: var(--muted-ink);
+}
+.map-options p {
+  padding: 12px 20px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--muted-ink);
+}
+.button {
+  min-height: 49px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--red);
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.button span {
+  font-size: 20px;
+}
+.button-red {
+  background: var(--red);
+  color: var(--paper-light);
+}
+.button-red:hover {
+  background: #722321;
+}
+.button-line {
+  color: var(--red);
+}
+.button-line:hover {
+  background: #eee3d7;
+}
+.invitation-feedback {
+  color: var(--muted-ink);
+  font-size: 11px;
+  margin-top: 18px;
+  min-height: 30px;
+  line-height: 1.5;
+}
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 25px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted-ink);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+.site-footer a {
+  color: var(--red);
+  font: 18px var(--serif);
+}
+.site-footer a span {
+  margin-left: 15px;
+}
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 30px;
+  padding: 12px 0;
+  color: var(--red);
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  font-size: 14px;
+}

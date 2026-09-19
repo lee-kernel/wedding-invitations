@@ -1,0 +1,27 @@
+.arrow-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+  vertical-align: -0.12em;
+  pointer-events: none;
+}
+
+.map-options summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+}
+
+.map-options summary::marker {
+  content: '';
+}
+
+.map-options summary::-webkit-details-marker {
+  display: none;
+}
+
+.map-options[open] summary > .arrow-icon {
+  transform: rotate(90deg);
+}
