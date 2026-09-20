@@ -1,6 +1,6 @@
 export const wedding = {
-  groom: '汪家喆',
-  bride: '朱敏',
+  groom: '张子乔',
+  bride: '陈美嘉',
   date: '2026.10.03',
   dateLong: '2026 年 10 月 3 日',
   lunar: '农历八月廿三',
@@ -14,16 +14,24 @@ export const wedding = {
 
 const invitationImage = (file: string) => `${import.meta.env.BASE_URL}images/invitation/${file}`;
 
+
+export const music = {
+  title: '达尔文',
+  artist: '林俊杰',
+  src: `${import.meta.env.BASE_URL}audio/wedding-song.mp3`,
+};
 export const imageSlots = {
-  hero: { src: invitationImage('hero.webp'), label: '01 / 首屏创意主视觉', alt: '汪家喆与朱敏的婚礼创意主视觉' },
-  musicCover: { src: invitationImage('music-cover.webp'), label: '音乐封面', alt: '汪家喆与朱敏的婚礼音乐封面' },
-  portrait: { src: invitationImage('portrait.webp'), label: '02 / 双人竖图', alt: '汪家喆与朱敏并肩合影' },
-  storyLeft: { src: invitationImage('story-left.webp'), label: '03 / 故事左图', alt: '汪家喆与朱敏的婚礼故事照片' },
-  storyRight: { src: invitationImage('story-right.webp'), label: '04 / 故事右图', alt: '汪家喆与朱敏的婚礼故事照片' },
-  focus: { src: invitationImage('story-focus.webp'), label: '05 / 故事主图', alt: '汪家喆与朱敏的婚纱照' },
-  wide: { src: invitationImage('gallery-wide.webp'), label: '06 / 横向照片', alt: '汪家喆与朱敏的横向婚纱照' },
-  close: { src: invitationImage('gallery-close.webp'), label: '07 / 横向近景', alt: '汪家喆与朱敏的近景婚纱照' },
-  date: { src: invitationImage('wedding-date.webp'), label: '08 / 日期配图', alt: '汪家喆与朱敏的婚礼日期配图' },
+  hero: { src: invitationImage('hero.webp'), label: '01 / 首屏创意主视觉', alt: '张子乔与陈美嘉的婚礼创意主视觉' },
+  childLeft: { src: invitationImage('child-left.webp'), label: '左侧小朋友头像', alt: '左侧小朋友头像' },
+  childRight: { src: invitationImage('child-right.webp'), label: '右侧小朋友头像', alt: '右侧小朋友头像' },
+  musicCover: { src: invitationImage('music-cover.webp'), label: '音乐封面', alt: '张子乔与陈美嘉的婚礼音乐封面' },
+  portrait: { src: invitationImage('portrait.webp'), label: '02 / 双人竖图', alt: '张子乔与陈美嘉并肩合影' },
+  storyLeft: { src: invitationImage('story-left.webp'), label: '03 / 故事左图', alt: '张子乔与陈美嘉的婚礼故事照片' },
+  storyRight: { src: invitationImage('story-right.webp'), label: '04 / 故事右图', alt: '张子乔与陈美嘉的婚礼故事照片' },
+  focus: { src: invitationImage('story-focus.webp'), label: '05 / 故事主图', alt: '张子乔与陈美嘉的婚纱照' },
+  wide: { src: invitationImage('gallery-wide.webp'), label: '06 / 横向照片', alt: '张子乔与陈美嘉的横向婚纱照' },
+  close: { src: invitationImage('gallery-close.webp'), label: '07 / 横向近景', alt: '张子乔与陈美嘉的近景婚纱照' },
+  date: { src: invitationImage('wedding-date.webp'), label: '08 / 日期配图', alt: '张子乔与陈美嘉的婚礼日期配图' },
   venue: { src: invitationImage('venue.webp'), label: '09 / 场地图片', alt: '婚礼场地或交通示意图片' },
 };
 
@@ -35,7 +43,7 @@ export const photographs = [
     caption: '人间的风景很多，\n我偏爱有你的这一处。',
     paper: 'letter',
     carrier: '一封信笺',
-    alt: '朱敏身穿红色长裙，与汪家喆在中式庭院相望',
+    alt: '陈美嘉身穿红色长裙，与张子乔在中式庭院相望',
     position: '50% 46%',
   },
   {
@@ -45,7 +53,7 @@ export const photographs = [
     caption: '那些平凡的小事，\n因为是你，都值得珍藏。',
     paper: 'memo',
     carrier: '一页日常',
-    alt: '汪家喆轻吻身穿白色婚纱的朱敏的额头',
+    alt: '张子乔轻吻身穿白色婚纱的陈美嘉的额头',
     position: '50% 37%',
   },
   {
@@ -55,7 +63,7 @@ export const photographs = [
     caption: '不用赶路。\n往后的日子，我们慢慢走。',
     paper: 'postcard',
     carrier: '一张明信片',
-    alt: '汪家喆与朱敏在花园中相拥，朱敏手捧白花',
+    alt: '张子乔与陈美嘉在花园中相拥，陈美嘉手捧白花',
     position: '50% 35%',
   },
   {
@@ -80,7 +88,7 @@ export const letterNotes = [
     caption: `${wedding.dateLong} · ${wedding.day}\n${wedding.lunar}\n${wedding.welcome} 到场 · ${wedding.ceremony} 仪式\n${wedding.venue}\n${wedding.room}`,
   },
   {
-    label: '汪家喆 & 朱敏',
+    label: '张子乔 & 陈美嘉',
     caption: '有你在，才是圆满。\n诚邀你，与我们一起，\n开启人生的新一页。',
   },
   {

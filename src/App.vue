@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { imageSlots, photographs, wedding } from '@/data/wedding';
+import { imageSlots, music, photographs, wedding } from '@/data/wedding';
 import PhotoSlot from '@/components/PhotoSlot.vue';
 import MapDirections from '@/components/MapDirections.vue';
 import SaveInvitationImage from '@/components/SaveInvitationImage.vue';
@@ -18,25 +18,169 @@ const countdown = computed(() => {
   ];
 });
 const calendarDays = Array.from({ length: 31 }, (_, index) => index + 1);
-onMounted(() => { timer = window.setInterval(() => { now.value = Date.now(); }, 1000); });
-onBeforeUnmount(() => window.clearInterval(timer));
+const audio = ref<HTMLAudioElement | null>(null);
+const audioReady = ref(false);
+const isPlaying = ref(false);
+const showMusicUnlock = ref(false);
+const audioCurrentTime = ref(0);
+const audioDuration = ref(0);
+const audioProgress = computed(() => audioDuration.value > 0 ? Math.min(100, (audioCurrentTime.value / audioDuration.value) * 100) : 0);
+let autoScrollFrame = 0;
+let autoScrollDelay = 0;
+let lastScrollTime = 0;
+let autoScrollCancelled = false;
+let autoScrollStarted = false;
+const autoScrollSpeed = 34;
+
+async function tryStartMusic() {
+  if (!audio.value) return false;
+  if (!audio.value.paused) {
+    showMusicUnlock.value = false;
+    return true;
+  }
+  try {
+    await audio.value.play();
+    showMusicUnlock.value = false;
+    return true;
+  } catch {
+    showMusicUnlock.value = true;
+    return false;
+  }
+}
+
+async function toggleMusic() {
+  if (!audio.value || !audioReady.value) return;
+  if (audio.value.paused) await audio.value.play();
+  else audio.value.pause();
+}
+function syncAudioProgress() {
+  if (!audio.value) return;
+  audioCurrentTime.value = Number.isFinite(audio.value.currentTime) ? audio.value.currentTime : 0;
+  audioDuration.value = Number.isFinite(audio.value.duration) ? audio.value.duration : 0;
+}
+
+function seekAudio(event: Event) {
+  if (!audio.value || !audioDuration.value) return;
+  const input = event.currentTarget as HTMLInputElement;
+  audio.value.currentTime = Number(input.value);
+  syncAudioProgress();
+}
+
+function formatAudioTime(seconds: number) {
+  if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+  const minutes = Math.floor(seconds / 60);
+  return `${minutes}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+}
+
+function stopAutoScroll() {
+  autoScrollCancelled = true;
+  autoScrollStarted = false;
+  window.clearTimeout(autoScrollDelay);
+  window.cancelAnimationFrame(autoScrollFrame);
+  document.documentElement.classList.remove('auto-scrolling');
+}
+
+function scrollPage(timestamp: number) {
+  if (autoScrollCancelled) return;
+  const elapsed = Math.min(timestamp - lastScrollTime, 50);
+  lastScrollTime = timestamp;
+  window.scrollBy(0, autoScrollSpeed * elapsed / 1000);
+  const reachedBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+  if (!reachedBottom) autoScrollFrame = window.requestAnimationFrame(scrollPage);
+  else {
+    autoScrollStarted = false;
+    document.documentElement.classList.remove('auto-scrolling');
+  }
+}
+
+function startAutoScroll() {
+  if (autoScrollCancelled || autoScrollStarted || showMusicUnlock.value) return;
+  autoScrollStarted = true;
+  document.documentElement.classList.add('auto-scrolling');
+  lastScrollTime = performance.now();
+  autoScrollFrame = window.requestAnimationFrame(scrollPage);
+}
+
+async function handleFirstInteraction() {
+  const started = await tryStartMusic();
+  if (started) {
+    startAutoScroll();
+    document.removeEventListener('pointerdown', handleFirstInteraction);
+    document.removeEventListener('keydown', handleFirstInteraction);
+  }
+}
+
+async function unlockExperience() {
+  const started = await tryStartMusic();
+  if (started) startAutoScroll();
+}
+
+onMounted(() => {
+  timer = window.setInterval(() => { now.value = Date.now(); }, 1000);
+  void tryStartMusic();
+  autoScrollDelay = window.setTimeout(startAutoScroll, 1200);
+  document.addEventListener('pointerdown', handleFirstInteraction, { passive: true });
+  document.addEventListener('keydown', handleFirstInteraction);
+  window.addEventListener('wheel', stopAutoScroll, { passive: true });
+  window.addEventListener('touchmove', stopAutoScroll, { passive: true });
+});
+
+onBeforeUnmount(() => {
+  window.clearInterval(timer);
+  stopAutoScroll();
+  audio.value?.pause();
+  document.removeEventListener('pointerdown', handleFirstInteraction);
+  document.removeEventListener('keydown', handleFirstInteraction);
+  window.removeEventListener('wheel', stopAutoScroll);
+  window.removeEventListener('touchmove', stopAutoScroll);
+});
 </script>
 
 <template>
   <a class="skip-link" href="#wedding-details">跳到婚礼时间与地点</a>
 
+  <Transition name="music-gate">
+    <div v-if="showMusicUnlock" class="music-unlock" role="dialog" aria-modal="true" aria-label="开启婚礼邀请">
+      <button type="button" @click="unlockExperience"><span aria-hidden="true">囍</span><strong>开启婚礼邀请</strong><small>轻触播放音乐</small></button>
+    </div>
+  </Transition>
+
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
-      <header class="hero-heading">
-        <h1 id="hero-title"><span lang="en">Save The Date</span><i>|</i> 汪家喆&amp;朱敏的<br />婚礼邀请函</h1>
-        <div><span># Love never fails</span><span>2026-10-03 {{ wedding.ceremony }}</span></div>
+      <header class="just-married">
+        <h1 id="hero-title">
+          <svg class="title-arc" viewBox="0 0 500 100" aria-hidden="true" focusable="false">
+            <defs><path id="title-arc-path" d="M 48 84 Q 250 -14 452 84" /></defs>
+            <text><textPath href="#title-arc-path" startOffset="50%" text-anchor="middle">WE ARE GETTING MARRIED</textPath></text>
+          </svg>
+          <strong>我们结婚啦！</strong>
+        </h1>
+        <div class="kids-and-happiness">
+          <div class="child-role">
+            <PhotoSlot class="child-portrait child-left" :src="imageSlots.childLeft.src" :label="imageSlots.childLeft.label" :alt="imageSlots.childLeft.alt" ratio="1 / 1" />
+            <small>新郎</small>
+          </div>
+          <span class="double-happiness" aria-hidden="true">囍</span>
+          <div class="child-role">
+            <PhotoSlot class="child-portrait child-right" :src="imageSlots.childRight.src" :label="imageSlots.childRight.label" :alt="imageSlots.childRight.alt" ratio="1 / 1" />
+            <small>新娘</small>
+          </div>
+        </div>
       </header>
-      <p class="hero-script"><span>Welcome to our</span><strong>Wedding</strong></p>
       <PhotoSlot class="hero-artwork" :src="imageSlots.hero.src" :label="imageSlots.hero.label" :alt="imageSlots.hero.alt" ratio="1 / 1" eager />
-      <div class="music-card" aria-label="婚礼背景音乐素材位置">
-        <div class="music-copy"><strong>汪家喆 · 朱敏</strong><span>婚礼背景音乐 · 素材待添加</span></div>
-        <div class="sound-bars" aria-hidden="true"><i /><i /><i /><i /></div>
+      <div class="music-card" :data-playing="isPlaying" :data-ready="audioReady" :aria-label="`${music.title}，${music.artist}`">
+        <div class="music-copy">
+          <div class="music-meta"><div><strong>{{ music.title }}</strong><span class="music-artist">{{ music.artist }}</span></div><span class="music-status">{{ isPlaying ? 'PLAYING' : 'READY' }}</span></div>
+          <div class="music-timeline">
+            <input type="range" min="0" :max="audioDuration || 0" step="0.1" :value="audioCurrentTime" :disabled="!audioReady" :style="{ '--music-progress': `${audioProgress}%` }" aria-label="音乐播放进度" @input="seekAudio" />
+            <div class="music-time" aria-hidden="true"><span>{{ formatAudioTime(audioCurrentTime) }}</span><span>{{ formatAudioTime(audioDuration) }}</span></div>
+          </div>
+        </div>
+        <button class="music-toggle" type="button" :disabled="!audioReady" :aria-label="isPlaying ? '暂停婚礼音乐' : '播放婚礼音乐'" @click="toggleMusic">
+          <span class="sound-bars" aria-hidden="true"><i /><i /><i /><i /></span>
+        </button>
         <PhotoSlot :src="imageSlots.musicCover.src" :label="imageSlots.musicCover.label" :alt="imageSlots.musicCover.alt" ratio="1 / 1" />
+        <audio ref="audio" :src="music.src" preload="auto" autoplay loop playsinline @canplay="audioReady = true; syncAudioProgress()" @loadedmetadata="syncAudioProgress" @durationchange="syncAudioProgress" @timeupdate="syncAudioProgress" @error="audioReady = false" @play="isPlaying = true" @pause="isPlaying = false" @ended="isPlaying = false; syncAudioProgress()" />
       </div>
       <div class="hero-opening">
         <p>嗨～当你看到这封邀请的时候</p>
@@ -46,12 +190,14 @@ onBeforeUnmount(() => window.clearInterval(timer));
       <div class="countdown" aria-label="距离婚礼的倒计时"><div v-for="item in countdown" :key="item.label"><strong>{{ item.value }}</strong><span>{{ item.label }}</span></div></div>
     </section>
 
+    <div class="transition-happiness" role="img" aria-label="双喜">「囍」</div>
+
     <section id="welcome" class="welcome section-shell">
       <p class="section-mark">WELCOME TO OUR WEDDING</p>
       <h2>嘿，当你看到这封邀请，<br />我们的婚礼已经进入倒计时。</h2>
       <p>很开心我们出现在彼此的生命中，<br />也很开心能把这份喜悦，认真地分享给你。</p>
       <PhotoSlot :src="imageSlots.portrait.src" :label="imageSlots.portrait.label" :alt="imageSlots.portrait.alt" ratio="4 / 5" />
-      <p class="names-line">汪家喆 <i>&amp;</i> 朱敏</p>
+      <p class="names-line">张子乔 <i>&amp;</i> 陈美嘉</p>
     </section>
 
     <section id="story" class="story section-shell" aria-labelledby="story-title">
@@ -82,7 +228,7 @@ onBeforeUnmount(() => window.clearInterval(timer));
         <div class="calendar-card">
           <div class="calendar-title"><strong>10 <small>/ 03</small></strong><span>— 2026 —</span></div>
           <div class="weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
-          <div class="calendar-grid"><span v-for="blank in 3" :key="`blank-${blank}`" aria-hidden="true" /><span v-for="day in calendarDays" :key="day" :class="{ chosen: day === 3 }">{{ day }}</span></div>
+          <div class="calendar-grid"><span v-for="blank in 3" :key="`blank-${blank}`" aria-hidden="true" /><span v-for="day in calendarDays" :key="day" :class="{ chosen: day === 3 }" :aria-current="day === 3 ? 'date' : undefined">{{ day }}</span></div>
           <p>{{ wedding.dateLong }} · {{ wedding.day }}<br />{{ wedding.lunar }}</p>
         </div>
         <PhotoSlot :src="imageSlots.date.src" :label="imageSlots.date.label" :alt="imageSlots.date.alt" ratio="4 / 5" />
@@ -97,6 +243,6 @@ onBeforeUnmount(() => window.clearInterval(timer));
       </div>
     </section>
 
-    <footer class="footer"><p>有你在，才是圆满。</p><strong>汪家喆 <i>&amp;</i> 朱敏</strong><span>2026.10.03 · 不见不散</span></footer>
+    <footer class="footer"><p>有你在，才是圆满。</p><strong>张子乔 <i>&amp;</i> 陈美嘉</strong><span>2026.10.03 · 不见不散</span></footer>
   </main>
 </template>

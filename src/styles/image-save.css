@@ -1,82 +1,110 @@
 .image-save-dialog {
-  width: min(440px, calc(100vw - 24px)) !important;
-  max-width: 440px !important;
-  max-height: calc(100dvh - 24px);
+  width: min(480px, calc(100vw - 28px)) !important;
+  max-width: 480px !important;
+  max-height: calc(100dvh - 28px);
   display: flex !important;
   flex-direction: column;
   gap: 0 !important;
   padding: 0 !important;
   overflow: hidden;
-  border-radius: 2px !important;
-  background: var(--paper-light) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 24px !important;
+  background: #fff !important;
   color: var(--ink);
+  box-shadow: 0 28px 90px rgb(120 32 43 / 22%);
 }
 .image-save-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
-  padding: 6px 10px 6px 20px;
+  padding: 18px 18px 16px 22px;
   border-bottom: 1px solid var(--line);
+  background: #fff;
 }
-.image-save-header h2 {
-  font: 20px/1.5 var(--hand) !important;
-}
+.image-save-header > div { display: grid; gap: 3px; }
+.image-save-header span { color: var(--red); font: 700 11px/1.4 var(--sans); letter-spacing: .14em; }
+.image-save-header h2 { color: var(--ink); font: 700 23px/1.35 var(--hand) !important; }
 .image-save-header button {
-  width: 44px;
-  height: 44px;
-  background: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
   border: 0;
-  font: 28px var(--sans);
+  border-radius: 50%;
+  background: var(--pink-light);
   color: var(--red);
+  font: 28px/1 var(--sans);
+  transition: transform .2s ease, background .2s ease;
 }
+.image-save-header button:hover { background: var(--pink); transform: rotate(6deg); }
 .image-save-scroll {
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 16px;
-  background: #e5dccb;
+  padding: 20px;
+  background: linear-gradient(145deg, var(--pink-light), var(--pink));
+  scrollbar-color: var(--red) transparent;
 }
 .image-save-scroll > output {
   display: block;
-  padding: 50px 20px;
+  padding: 64px 20px;
+  color: var(--red);
+  font: 700 18px/1.7 var(--hand);
   text-align: center;
 }
 .invitation-image {
   display: block;
   width: 100%;
   height: auto;
+  border: 4px solid #fff;
+  border-radius: 14px;
   -webkit-touch-callout: default;
   user-select: auto;
-  box-shadow: 0 4px 15px #3b2f1f20;
+  box-shadow: 0 14px 38px rgb(120 32 43 / 16%);
 }
 .image-save-actions {
-  padding: 12px 18px;
+  padding: 16px 20px 20px;
   flex-shrink: 0;
+  border-top: 1px solid var(--line);
+  background: #fff;
 }
 .image-save-actions > p,
-.image-save-feedback {
-  font: 14px/1.6 var(--sans) !important;
-  color: var(--muted-ink) !important;
-}
+.image-save-feedback { color: var(--muted-ink) !important; font: 14px/1.65 var(--sans) !important; }
 .image-save-actions .button {
   width: 100%;
-  margin-top: 10px;
-  min-height: 44px;
-  padding: 8px 14px;
+  min-height: 50px;
+  margin-top: 11px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-weight: 600;
 }
-.image-save-feedback:empty {
-  display: none;
-}
+.image-save-actions .button-line { background: #fff; color: var(--red); }
+.image-save-feedback:empty { display: none; }
 .image-save-feedback:not(:empty) {
   display: block;
   margin-top: 10px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: var(--pink-light);
+  color: var(--red) !important;
+}
+@media (max-width: 520px) {
+  .image-save-dialog {
+    width: calc(100vw - 16px) !important;
+    max-height: calc(100dvh - 16px);
+    border-radius: 20px !important;
+  }
+  .image-save-header { padding: 15px 14px 14px 17px; }
+  .image-save-header h2 { font-size: 21px !important; }
+  .image-save-scroll { padding: 12px; }
+  .image-save-actions { padding: 13px 14px 15px; }
 }
 @media (max-height: 600px) {
-  .image-save-actions {
-    padding: 8px 14px;
-  }
-  .image-save-actions > p {
-    font-size: 12px !important;
-  }
+  .image-save-header { padding-block: 10px; }
+  .image-save-scroll { padding: 10px; }
+  .image-save-actions { padding: 8px 14px 10px; }
+  .image-save-actions > p { font-size: 12px !important; }
+  .image-save-actions .button { min-height: 44px; margin-top: 7px; }
 }

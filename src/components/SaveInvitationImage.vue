@@ -27,9 +27,9 @@ onBeforeUnmount(() => { if (url.value) URL.revokeObjectURL(url.value); });
 <template>
   <button ref="trigger" class="button button-red" :disabled="!ready" @click="show">保存为图片 <span aria-hidden="true"><ArrowIcon /></span></button>
   <ModalDialog :open="open" class-name="image-save-dialog" label="把邀请，留在手边。" :final-focus="trigger" @close="open = false">
-    <header class="image-save-header"><h2>把邀请，留在手边。</h2><button aria-label="收起邀请图片" @click="open = false">×</button></header>
+    <header class="image-save-header"><div><span>囍 · SAVE THE DATE</span><h2>把邀请，留在手边。</h2></div><button aria-label="收起邀请图片" @click="open = false">×</button></header>
     <section class="image-save-scroll" tabindex="0" aria-label="邀请图片预览，可滚动或长按保存">
-      <img v-if="url" class="invitation-image" :src="url" alt="汪家喆与朱敏诚挚敬邀，2026年10月3日，17:28到场、17:58仪式，黄山市歙县徽苑一楼，2号厅" width="1080" height="1620" />
+      <img v-if="url" class="invitation-image" :src="url" alt="张子乔与陈美嘉诚挚敬邀，2026年10月3日，17:28到场、17:58仪式，黄山市歙县徽苑一楼，2号厅" width="1080" height="1620" />
       <output v-else>正在写好这份邀请…</output>
     </section>
     <div class="image-save-actions" :data-device="device"><p>{{ hint }}</p>

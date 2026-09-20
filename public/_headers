@@ -1,8 +1,0 @@
-/wedding/assets/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/wedding/images/*
-  Cache-Control: public, max-age=86400
-
-/wedding/fonts/*
-  Cache-Control: public, max-age=86400
