@@ -124,15 +124,8 @@ python -m fontTools.ttLib.woff2 compress input.otf -o output.woff2
 | Build output directory | `dist/client` |
 | Root directory | 留空（仓库根目录） |
 
-无需设置 `VITE_BASE_URL`；Cloudflare Pages 使用站点根路径 `/`。保存并部署后，每次向生产分支推送都会自动重新构建，Pull Request 会生成预览部署。
+Cloudflare Pages 使用站点根路径 `/`，无需额外设置基础路径变量。保存并部署后，每次向生产分支推送都会自动重新构建，Pull Request 会生成预览部署。
 
-## GitHub Pages 部署
-
-项目包含 `.github/workflows/deploy-pages.yml`。推送到 `main` 或 `master` 分支后，GitHub Actions 会自动安装依赖、执行生产构建并部署到 GitHub Pages；Pull Request 会执行相同构建检查，但不会部署。
-
-首次使用时，在仓库的 **Settings → Pages → Build and deployment** 中将 Source 设为 **GitHub Actions**。
-
-工作流会根据 GitHub 仓库名自动设置站点基础路径，本地开发使用根路径 `/`。
 ## 项目结构
 
 ```text
