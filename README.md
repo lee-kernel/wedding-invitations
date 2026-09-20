@@ -41,6 +41,22 @@ npm run build
 npm run preview
 ```
 
+## 分享卡片与站点地址
+
+入口 HTML 使用固定的 Open Graph 元信息，微信等抓取器无需执行客户端 JavaScript 即可读取标题、描述、站点名称和分享封面。项目不接入微信公众号 JS-SDK，也不需要 `access_token`、`jsapi_ticket` 或签名。
+
+`VITE_SITE_URL` 是公开、非敏感的构建变量，用于生成 `canonical`、`og:url` 和 `og:image` 的 HTTPS 绝对 URL：
+
+| 环境 | 配置文件 | 默认值 |
+| --- | --- | --- |
+| 开发 | `.env.development` | `https://dev.wedding-invitations.pages.dev` |
+| 测试 | `.env.test` | `https://test.wedding-invitations.pages.dev` |
+| 生产 | `.env.production` | `https://wedding-invitations.pages.dev` |
+
+测试环境构建可运行 `npm run build -- --mode test`。分享封面位于 `public/images/invitation/share-cover.png`，生产构建后公开地址为 `https://wedding-invitations.pages.dev/images/invitation/share-cover.png`。
+
+绑定或更换正式域名时，必须修改 `.env.production` 中的 `VITE_SITE_URL`，然后重新执行生产构建并部署；仅修改 Cloudflare 域名设置不会改写已经生成的 HTML。
+
 ## 修改婚礼信息
 
 日期、时间、地点、歌曲信息和图片槽位集中维护在：
@@ -57,7 +73,8 @@ src/data/wedding.ts
 
 | 文件名 | 页面位置 | 推荐比例 |
 | --- | --- | --- |
-| `hero.webp` | 首屏创意主视觉 | 1:1 |
+| hero.webp | 首屏创意主视觉 | 1:1 |
+| share-cover.png | 微信／社交平台分享封面 | 1200:630 |
 | `child-left.webp` | 左侧小朋友头像／新郎 | 1:1 |
 | `child-right.webp` | 右侧小朋友头像／新娘 | 1:1 |
 | `music-cover.webp` | 音乐唱片封面 | 1:1 |
@@ -108,6 +125,7 @@ python -m fontTools.ttLib.woff2 compress input.otf -o output.woff2
 | Root directory | 留空（仓库根目录） |
 
 无需设置 `VITE_BASE_URL`；Cloudflare Pages 使用站点根路径 `/`。保存并部署后，每次向生产分支推送都会自动重新构建，Pull Request 会生成预览部署。
+
 ## GitHub Pages 部署
 
 项目包含 `.github/workflows/deploy-pages.yml`。推送到 `main` 或 `master` 分支后，GitHub Actions 会自动安装依赖、执行生产构建并部署到 GitHub Pages；Pull Request 会执行相同构建检查，但不会部署。
