@@ -29,15 +29,23 @@
   border: 1px solid rgb(255 255 255 / 45%);
   border-radius: 50%;
   background: rgb(38 24 28 / 52%);
-  font-family: Georgia, serif;
-  font-size: 25px;
-  line-height: 1;
+  line-height: 0;
   opacity: 0;
   transform: translateY(6px);
   backdrop-filter: blur(8px);
   transition: opacity .2s ease, transform .2s ease, background .2s ease;
 }
 
+.photo-preview-trigger svg {
+  display: block;
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .photo-slot.is-previewable:hover .photo-preview-trigger span,
 .photo-preview-trigger:focus-visible span {
   opacity: 1;
@@ -193,7 +201,6 @@
     bottom: 10px;
     width: 34px;
     height: 34px;
-    font-size: 22px;
     opacity: .85;
     transform: none;
   }
