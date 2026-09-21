@@ -1341,7 +1341,7 @@ a:focus-visible,
 }
 
 .hero-artwork {
-  width: min(100%, 590px);
+  width: min(80%, 590px);
   margin-inline: auto;
   aspect-ratio: 1 / 1;
   overflow: hidden;
@@ -1508,7 +1508,7 @@ a:focus-visible,
   }
 
   .hero-artwork {
-    width: 100%;
+    width: 80%;
     align-self: auto;
   }
 
