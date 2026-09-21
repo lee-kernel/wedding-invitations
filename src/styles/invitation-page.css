@@ -1343,16 +1343,23 @@ a:focus-visible,
 .hero-artwork {
   width: min(100%, 590px);
   margin-inline: auto;
-  aspect-ratio: 5 / 4;
-  background: transparent;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  background: var(--pink-light);
+  box-shadow: 0 18px 50px rgb(103 44 57 / 14%);
 }
 
 .hero-artwork img {
-  object-fit: contain;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center;
 }
 
 .hero-artwork .photo-placeholder {
   border: 0;
+  border-radius: inherit;
   background: radial-gradient(circle, var(--pink) 0 48%, transparent 48.5%);
 }
 
