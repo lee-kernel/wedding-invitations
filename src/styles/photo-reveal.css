@@ -1,0 +1,127 @@
+.photo-slot.has-reveal[data-loaded='true'] {
+  --photo-reveal-x: 0;
+  --photo-reveal-y: 26px;
+  --photo-reveal-scale: .965;
+  --photo-reveal-rotate: 0deg;
+
+  opacity: 0;
+  clip-path: inset(7% 4% round 5px);
+  filter: saturate(.84) brightness(1.06);
+  transform: translate3d(var(--photo-reveal-x), var(--photo-reveal-y), 0) scale(var(--photo-reveal-scale)) rotate(var(--photo-reveal-rotate));
+  transition:
+    opacity .72s cubic-bezier(.22, 1, .36, 1) var(--photo-reveal-delay),
+    clip-path .88s cubic-bezier(.22, 1, .36, 1) var(--photo-reveal-delay),
+    filter .88s ease var(--photo-reveal-delay),
+    transform .88s cubic-bezier(.22, 1, .36, 1) var(--photo-reveal-delay);
+}
+
+.photo-slot.has-reveal[data-loaded='true'][data-reveal-direction='left'] {
+  --photo-reveal-x: -34px;
+  --photo-reveal-y: 8px;
+  --photo-reveal-rotate: -1.4deg;
+}
+
+.photo-slot.has-reveal[data-loaded='true'][data-reveal-direction='right'] {
+  --photo-reveal-x: 34px;
+  --photo-reveal-y: 8px;
+  --photo-reveal-rotate: 1.4deg;
+}
+
+.photo-slot.has-reveal[data-loaded='true'][data-reveal-direction='focus'] {
+  --photo-reveal-y: 12px;
+  --photo-reveal-scale: .92;
+}
+
+.photo-slot.has-reveal[data-loaded='true'].is-revealed {
+  opacity: 1;
+  clip-path: inset(0 round 0);
+  filter: none;
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+}
+
+.photo-slot.has-reveal[data-loaded='true']::after {
+  content: '';
+  position: absolute;
+  inset: -18% -45%;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(105deg, transparent 39%, rgb(255 255 255 / 52%) 49%, rgb(255 255 255 / 16%) 55%, transparent 66%);
+  transform: translate3d(-72%, 0, 0) skewX(-12deg);
+}
+
+.photo-slot.has-reveal[data-loaded='true'].is-revealed::after {
+  animation: photo-developing-light .78s cubic-bezier(.22, 1, .36, 1) calc(var(--photo-reveal-delay) + 180ms) both;
+}
+
+
+@keyframes photo-developing-light {
+  0% {
+    opacity: 0;
+    transform: translate3d(-72%, 0, 0) skewX(-12deg);
+  }
+
+  26% {
+    opacity: .72;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(72%, 0, 0) skewX(-12deg);
+  }
+}
+
+@keyframes photo-preview-control-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(.9);
+  }
+}
+
+@media (max-width: 700px) {
+  .photo-slot.has-reveal[data-loaded='true'].is-revealed .photo-preview-trigger span {
+    animation: photo-preview-control-in .35s ease calc(var(--photo-reveal-delay) + 520ms) both;
+  }
+
+  .photo-slot.has-reveal[data-loaded='true'] {
+    --photo-reveal-y: 18px;
+
+    clip-path: inset(5% 3% round 4px);
+    filter: none;
+    transition-duration: .62s, .72s, .72s, .72s;
+  }
+
+  .photo-slot.has-reveal[data-loaded='true'][data-reveal-direction='left'] {
+    --photo-reveal-x: -22px;
+    --photo-reveal-y: 6px;
+    --photo-reveal-rotate: -.8deg;
+  }
+
+  .photo-slot.has-reveal[data-loaded='true'][data-reveal-direction='right'] {
+    --photo-reveal-x: 22px;
+    --photo-reveal-y: 6px;
+    --photo-reveal-rotate: .8deg;
+  }
+
+  .photo-slot.has-reveal[data-loaded='true'][data-reveal-direction='focus'] {
+    --photo-reveal-y: 8px;
+    --photo-reveal-scale: .95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-slot.has-reveal[data-loaded='true'],
+  .photo-slot.has-reveal[data-loaded='true'].is-revealed {
+    opacity: 1;
+    clip-path: none;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+
+  .photo-slot.has-reveal[data-loaded='true']::after,
+  .photo-slot.has-reveal[data-loaded='true'].is-revealed::after,
+  .photo-slot.has-reveal[data-loaded='true'].is-revealed .photo-preview-trigger span {
+    animation: none;
+  }
+}
