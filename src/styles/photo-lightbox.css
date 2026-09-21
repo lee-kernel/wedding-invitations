@@ -1,0 +1,212 @@
+.photo-slot.is-previewable {
+  cursor: zoom-in;
+}
+
+.photo-preview-trigger {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: #fff;
+  cursor: zoom-in;
+}
+
+.photo-preview-trigger:disabled {
+  pointer-events: none;
+}
+
+.photo-preview-trigger span {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 50%;
+  background: rgb(38 24 28 / 52%);
+  font-family: Georgia, serif;
+  font-size: 25px;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(6px);
+  backdrop-filter: blur(8px);
+  transition: opacity .2s ease, transform .2s ease, background .2s ease;
+}
+
+.photo-slot.is-previewable:hover .photo-preview-trigger span,
+.photo-preview-trigger:focus-visible span {
+  opacity: 1;
+  transform: translateY(0);
+  background: rgb(167 47 60 / 78%);
+}
+
+.photo-preview-trigger:focus-visible {
+  outline: 3px solid rgb(255 255 255 / 90%);
+  outline-offset: -5px;
+}
+
+.photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  grid-template-columns: minmax(54px, 1fr) minmax(0, 1100px) minmax(54px, 1fr);
+  align-items: center;
+  padding: 38px 24px 28px;
+  background: rgb(17 12 14 / 94%);
+  color: #fff;
+  backdrop-filter: blur(16px);
+  touch-action: pan-y;
+}
+
+.photo-lightbox figure {
+  grid-column: 2;
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.photo-lightbox img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 112px);
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 22px 70px rgb(0 0 0 / 48%);
+  user-select: none;
+}
+
+.photo-lightbox figcaption {
+  max-width: min(90vw, 760px);
+  overflow: hidden;
+  color: rgb(255 255 255 / 72%);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.photo-lightbox button {
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.photo-lightbox-close {
+  position: absolute;
+  top: max(18px, env(safe-area-inset-top));
+  right: max(18px, env(safe-area-inset-right));
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 12%);
+  font: 300 34px/1 Arial, sans-serif;
+}
+
+.photo-lightbox-nav {
+  width: 48px;
+  height: 64px;
+  justify-self: center;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 10%);
+  font: 300 52px/1 Georgia, serif;
+}
+
+.photo-lightbox-prev {
+  grid-column: 1;
+}
+
+.photo-lightbox-next {
+  grid-column: 3;
+}
+
+.photo-lightbox button:hover,
+.photo-lightbox button:focus-visible {
+  background: rgb(167 47 60 / 82%);
+  outline: 2px solid rgb(255 255 255 / 75%);
+  outline-offset: 3px;
+}
+
+.photo-lightbox-enter-active,
+.photo-lightbox-leave-active {
+  transition: opacity .24s ease;
+}
+
+.photo-lightbox-enter-active figure,
+.photo-lightbox-leave-active figure {
+  transition: transform .24s ease, opacity .24s ease;
+}
+
+.photo-lightbox-enter-from,
+.photo-lightbox-leave-to,
+.photo-lightbox-enter-from figure,
+.photo-lightbox-leave-to figure {
+  opacity: 0;
+}
+
+.photo-lightbox-enter-from figure {
+  transform: scale(.97);
+}
+
+@media (max-width: 700px) {
+  .photo-preview-trigger span {
+    right: 10px;
+    bottom: 10px;
+    width: 34px;
+    height: 34px;
+    font-size: 22px;
+    opacity: .85;
+    transform: none;
+  }
+
+  .photo-lightbox {
+    grid-template-columns: 1fr;
+    padding: max(66px, env(safe-area-inset-top)) 14px max(20px, env(safe-area-inset-bottom));
+  }
+
+  .photo-lightbox figure {
+    grid-column: 1;
+  }
+
+  .photo-lightbox img {
+    max-height: calc(100dvh - 130px);
+  }
+
+  .photo-lightbox-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    width: 42px;
+    height: 54px;
+    background: rgb(17 12 14 / 52%);
+    font-size: 44px;
+    transform: translateY(-50%);
+  }
+
+  .photo-lightbox-prev {
+    left: 8px;
+  }
+
+  .photo-lightbox-next {
+    right: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-preview-trigger span,
+  .photo-lightbox-enter-active,
+  .photo-lightbox-leave-active,
+  .photo-lightbox-enter-active figure,
+  .photo-lightbox-leave-active figure {
+    transition: none;
+  }
+}

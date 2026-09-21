@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { imageSlots, music, photographs, wedding } from '@/data/wedding';
 import PhotoSlot from '@/components/PhotoSlot.vue';
+import PhotoLightbox from '@/components/PhotoLightbox.vue';
 import MapDirections from '@/components/MapDirections.vue';
 import SaveInvitationImage from '@/components/SaveInvitationImage.vue';
 
@@ -31,6 +32,21 @@ let lastScrollTime = 0;
 let autoScrollCancelled = false;
 let autoScrollStarted = false;
 const autoScrollSpeed = 34;
+const previewPhotos = [
+  { src: imageSlots.portrait.src, alt: imageSlots.portrait.alt },
+  { src: imageSlots.storyLeft.src, alt: imageSlots.storyLeft.alt },
+  { src: imageSlots.storyRight.src, alt: imageSlots.storyRight.alt },
+  { src: imageSlots.focus.src, alt: imageSlots.focus.alt },
+  { src: imageSlots.wide.src, alt: imageSlots.wide.alt },
+  { src: imageSlots.close.src, alt: imageSlots.close.alt },
+  { src: imageSlots.date.src, alt: imageSlots.date.alt },
+];
+const previewIndex = ref<number | null>(null);
+
+function openPreview(index: number) {
+  stopAutoScroll();
+  previewIndex.value = index;
+}
 
 async function tryStartMusic() {
   if (!audio.value) return false;
@@ -196,7 +212,7 @@ onBeforeUnmount(() => {
       <p class="section-mark">WELCOME TO OUR WEDDING</p>
       <h2>嘿，当你看到这封邀请，<br />我们的婚礼已经进入倒计时。</h2>
       <p>很开心我们出现在彼此的生命中，<br />也很开心能把这份喜悦，认真地分享给你。</p>
-      <PhotoSlot :src="imageSlots.portrait.src" :label="imageSlots.portrait.label" :alt="imageSlots.portrait.alt" ratio="4 / 5" />
+      <PhotoSlot :src="imageSlots.portrait.src" :label="imageSlots.portrait.label" :alt="imageSlots.portrait.alt" ratio="4 / 5" previewable @preview="openPreview(0)" />
       <p class="names-line">张子乔 <i>&amp;</i> 陈美嘉</p>
     </section>
 
@@ -207,18 +223,18 @@ onBeforeUnmount(() => {
         <p>世界这么大，两个人相识相爱的概率很小。<br />所以我们想把相处的日常，慢慢写进往后的每一天。</p>
       </div>
       <div class="story-pair">
-        <PhotoSlot :src="imageSlots.storyLeft.src" :label="imageSlots.storyLeft.label" :alt="imageSlots.storyLeft.alt" ratio="3 / 4" />
-        <PhotoSlot :src="imageSlots.storyRight.src" :label="imageSlots.storyRight.label" :alt="imageSlots.storyRight.alt" ratio="3 / 4" />
+        <PhotoSlot :src="imageSlots.storyLeft.src" :label="imageSlots.storyLeft.label" :alt="imageSlots.storyLeft.alt" ratio="3 / 4" previewable @preview="openPreview(1)" />
+        <PhotoSlot :src="imageSlots.storyRight.src" :label="imageSlots.storyRight.label" :alt="imageSlots.storyRight.alt" ratio="3 / 4" previewable @preview="openPreview(2)" />
       </div>
       <blockquote><p>“不是所有浪漫都要盛大。<br />和你一起的普通日子，本身就足够珍贵。”</p><span>THANK YOU FOR BEING PART OF OUR STORY.</span></blockquote>
       <div class="story-focus">
-        <PhotoSlot :src="imageSlots.focus.src" :label="imageSlots.focus.label" :alt="imageSlots.focus.alt" ratio="4 / 5" />
+        <PhotoSlot :src="imageSlots.focus.src" :label="imageSlots.focus.label" :alt="imageSlots.focus.alt" ratio="4 / 5" previewable @preview="openPreview(3)" />
         <div><span>OUR STORY</span><h3>敬我们，<br />也敬余生。</h3><p>有些欢喜，想当面说。<br />有些时刻，想与你一起。</p></div>
       </div>
       <div class="story-notes" aria-label="我们的故事章节"><article v-for="photo in photographs" :key="photo.index"><span>{{ photo.index }}</span><h3>{{ photo.label }}</h3><p>{{ photo.caption.replace('\n', '') }}</p></article></div>
       <div class="story-wide">
-        <PhotoSlot :src="imageSlots.wide.src" :label="imageSlots.wide.label" :alt="imageSlots.wide.alt" ratio="16 / 9" />
-        <PhotoSlot :src="imageSlots.close.src" :label="imageSlots.close.label" :alt="imageSlots.close.alt" ratio="16 / 9" />
+        <PhotoSlot :src="imageSlots.wide.src" :label="imageSlots.wide.label" :alt="imageSlots.wide.alt" ratio="16 / 9" previewable @preview="openPreview(4)" />
+        <PhotoSlot :src="imageSlots.close.src" :label="imageSlots.close.label" :alt="imageSlots.close.alt" ratio="16 / 9" previewable @preview="openPreview(5)" />
       </div>
     </section>
 
@@ -231,7 +247,7 @@ onBeforeUnmount(() => {
           <div class="calendar-grid"><span v-for="blank in 3" :key="`blank-${blank}`" aria-hidden="true" /><span v-for="day in calendarDays" :key="day" :class="{ chosen: day === 3 }" :aria-current="day === 3 ? 'date' : undefined">{{ day }}</span></div>
           <p>{{ wedding.dateLong }} · {{ wedding.day }}<br />{{ wedding.lunar }}</p>
         </div>
-        <PhotoSlot :src="imageSlots.date.src" :label="imageSlots.date.label" :alt="imageSlots.date.alt" ratio="4 / 5" />
+        <PhotoSlot :src="imageSlots.date.src" :label="imageSlots.date.label" :alt="imageSlots.date.alt" ratio="4 / 5" previewable @preview="openPreview(6)" />
       </div>
       <div class="venue-card">
         <div class="venue-copy">
@@ -245,4 +261,5 @@ onBeforeUnmount(() => {
 
     <footer class="footer"><p>有你在，才是圆满。</p><strong>张子乔 <i>&amp;</i> 陈美嘉</strong><span>2026.10.03 · 不见不散</span></footer>
   </main>
+  <PhotoLightbox v-model="previewIndex" :photos="previewPhotos" />
 </template>
