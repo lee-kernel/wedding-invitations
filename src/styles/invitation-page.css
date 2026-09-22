@@ -2166,10 +2166,6 @@ a:focus-visible,
   pointer-events: none;
 }
 
-.kitty-fill-white {
-  fill: #fff;
-}
-
 .kitty-fill-red {
   fill: #ea6d9e;
 }
@@ -2178,55 +2174,9 @@ a:focus-visible,
   fill: #d94980;
 }
 
-.kitty-fill-pink {
-  fill: #ef78ad;
-}
-
-.kitty-fill-ink {
-  fill: #241f21;
-}
-
-.kitty-fill-yellow {
-  fill: #efb73e;
-}
-
-.kitty-outline {
-  stroke: #412524;
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.kitty-outline-red {
-  stroke: #a72f3c;
-  stroke-width: 2;
-  stroke-linejoin: round;
-}
-
-.kitty-line,
 .kitty-line-soft {
   fill: none;
   stroke-linecap: round;
-}
-
-.kitty-line {
-  stroke: #412524;
-  stroke-width: 5;
-}
-
-.kitty-nose {
-  stroke: #412524;
-  stroke-width: 3.5;
-}
-
-.kitty-bow-fold {
-  fill: none;
-  stroke: #b93669;
-  stroke-width: 4;
-  stroke-linecap: round;
-}
-
-.kitty-line-soft {
   stroke: rgb(255 255 255 / 52%);
   stroke-width: 2;
 }
