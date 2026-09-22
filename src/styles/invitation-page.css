@@ -2168,15 +2168,19 @@ a:focus-visible,
 
 .kitty-bow-lobe,
 .kitty-bow-knot {
-  fill: #cc2229;
-  stroke: #241616;
+  fill: #ed82ad;
+  stroke: #71313e;
   stroke-width: 5;
   stroke-linejoin: round;
 }
 
+.kitty-bow-knot {
+  fill: #e66f9e;
+}
+
 .kitty-bow-fold {
   fill: none;
-  stroke: #8f1117;
+  stroke: #b74773;
   stroke-width: 3;
   stroke-linecap: round;
 }
