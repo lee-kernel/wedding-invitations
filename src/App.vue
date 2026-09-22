@@ -177,11 +177,13 @@ onBeforeUnmount(() => {
         <div class="kids-and-happiness">
           <div class="child-role">
             <PhotoSlot class="child-portrait child-left" :src="imageSlots.childLeft.src" :label="imageSlots.childLeft.label" :alt="imageSlots.childLeft.alt" ratio="1 / 1" />
+            <KittyAccent class="child-bow" variant="bow" />
             <small>新郎</small>
           </div>
           <span class="double-happiness" aria-hidden="true">囍</span>
           <div class="child-role">
             <PhotoSlot class="child-portrait child-right" :src="imageSlots.childRight.src" :label="imageSlots.childRight.label" :alt="imageSlots.childRight.alt" ratio="1 / 1" />
+            <KittyAccent class="child-bow" variant="bow" />
             <small>新娘</small>
           </div>
         </div>

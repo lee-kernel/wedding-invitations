@@ -2166,19 +2166,19 @@ a:focus-visible,
   pointer-events: none;
 }
 
-.kitty-fill-red {
-  fill: #ea6d9e;
+.kitty-bow-lobe,
+.kitty-bow-knot {
+  fill: #cc2229;
+  stroke: #241616;
+  stroke-width: 5;
+  stroke-linejoin: round;
 }
 
-.kitty-fill-deep {
-  fill: #d94980;
-}
-
-.kitty-line-soft {
+.kitty-bow-fold {
   fill: none;
+  stroke: #8f1117;
+  stroke-width: 3;
   stroke-linecap: round;
-  stroke: rgb(255 255 255 / 52%);
-  stroke-width: 2;
 }
 
 .just-married {
@@ -2208,46 +2208,23 @@ a:focus-visible,
   position: relative;
 }
 
-.child-role::before,
-.child-role::after {
-  content: '';
+.child-bow {
   position: absolute;
+  top: -7px;
   z-index: 3;
-  border-radius: 50%;
-  background: #ea6d9e;
+  width: 42px;
+  filter: drop-shadow(0 4px 5px rgb(77 18 25 / 18%));
   pointer-events: none;
 }
 
-.child-role::before {
-  top: 3px;
-  width: 20px;
-  height: 15px;
-  box-shadow: 15px 0 0 #ea6d9e;
-  transform: rotate(-11deg);
+.child-role:first-child .child-bow {
+  right: 0;
+  transform: rotate(9deg);
 }
 
-.child-role::after {
-  top: 8px;
-  width: 12px;
-  height: 12px;
-  background: #d94980;
-}
-
-.child-role:first-child::before {
-  right: 8px;
-}
-
-.child-role:first-child::after {
-  right: 12px;
-}
-
-.child-role:last-child::before {
-  left: 8px;
-  transform: rotate(11deg);
-}
-
-.child-role:last-child::after {
-  left: 19px;
+.child-role:last-child .child-bow {
+  left: 0;
+  transform: rotate(-9deg);
 }
 
 .music-card > :not(.music-kitty) {
@@ -2363,15 +2340,9 @@ a:focus-visible,
     right: 0;
   }
 
-  .child-role::before {
-    width: 16px;
-    height: 12px;
-    box-shadow: 12px 0 0 #ea6d9e;
-  }
-
-  .child-role::after {
-    width: 9px;
-    height: 9px;
+  .child-bow {
+    top: -5px;
+    width: 34px;
   }
 
   .music-kitty {
