@@ -2185,6 +2185,13 @@ a:focus-visible,
   stroke-linecap: round;
 }
 
+.kitty-bow-shine {
+  fill: none;
+  stroke: rgb(255 255 255 / 82%);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
 .just-married {
   position: relative;
 }
