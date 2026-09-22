@@ -9,6 +9,7 @@ import KittyAccent from '@/components/KittyAccent.vue';
 
 const now = ref(Date.now());
 const eventTime = new Date('2026-10-03T17:58:00+08:00').getTime();
+const kittyScene = `${import.meta.env.BASE_URL}images/invitation/hello-kitty-scene.svg`;
 let timer = 0;
 const countdown = computed(() => {
   const remaining = Math.max(0, eventTime - now.value);
@@ -199,7 +200,14 @@ onBeforeUnmount(() => {
           </div>
         </div>
         <button class="music-toggle" type="button" :disabled="!audioReady" :aria-label="isPlaying ? '暂停婚礼音乐' : '播放婚礼音乐'" @click="toggleMusic">
-          <span class="sound-bars" aria-hidden="true"><i /><i /><i /><i /></span>
+          <svg class="bow-equalizer" viewBox="0 0 44 32" aria-hidden="true" focusable="false">
+            <path class="bow-equalizer-lobe bow-equalizer-left" d="M20 14C14 4 3 5 3 14c0 9 9 13 17 7Z" />
+            <path class="bow-equalizer-lobe bow-equalizer-right" d="M24 14C30 4 41 5 41 14c0 9-9 13-17 7Z" />
+            <path class="bow-equalizer-tail" d="m19 20-5 9 7-3 1-6 1 6 7 3-5-9Z" />
+            <circle class="bow-equalizer-knot" cx="22" cy="17" r="6" />
+            <path class="bow-equalizer-shine bow-equalizer-shine-left" d="M8 12c2-3 5-4 8-2" />
+            <path class="bow-equalizer-shine bow-equalizer-shine-right" d="M28 10c3-2 6-1 8 2" />
+          </svg>
         </button>
         <PhotoSlot :src="imageSlots.musicCover.src" :label="imageSlots.musicCover.label" :alt="imageSlots.musicCover.alt" ratio="1 / 1" />
         <audio ref="audio" :src="music.src" preload="auto" autoplay loop playsinline @canplay="audioReady = true; syncAudioProgress()" @loadedmetadata="syncAudioProgress" @durationchange="syncAudioProgress" @timeupdate="syncAudioProgress" @error="audioReady = false" @play="isPlaying = true" @pause="isPlaying = false" @ended="isPlaying = false; syncAudioProgress()" />
@@ -273,7 +281,18 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
-    <footer class="footer"><KittyAccent variant="face" /><p>有你在，才是圆满。</p><strong>张子乔 <i>&amp;</i> 陈美嘉</strong><span>2026.10.03 · 不见不散</span><small>WITH LOVE &amp; A LITTLE BOW</small></footer>
+    <section id="kitty-farewell" class="kitty-farewell" aria-label="Hello Kitty 婚礼感谢场景">
+      <div class="kitty-farewell-art">
+        <span class="kitty-gift kitty-gift-left" aria-hidden="true"><i /></span>
+        <img :src="kittyScene" alt="完整造型的 Hello Kitty" loading="lazy" draggable="false" />
+        <span class="kitty-gift kitty-gift-right" aria-hidden="true"><i /></span>
+        <KittyAccent variant="bow" />
+      </div>
+      <p>Thank you for being part of our story.</p>
+      <span>谢谢你，来见证我们的幸福。</span>
+    </section>
+
+    <footer class="footer"><p>有你在，才是圆满。</p><strong>张子乔 <i>&amp;</i> 陈美嘉</strong><span>2026.10.03 · 不见不散</span><small>WITH LOVE &amp; A LITTLE BOW</small></footer>
   </main>
   <PhotoLightbox v-model="previewIndex" :photos="previewPhotos" />
 </template>

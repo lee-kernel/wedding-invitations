@@ -1421,33 +1421,38 @@ a:focus-visible,
   font-size: 11px;
 }
 
-.sound-bars {
-  height: 31px;
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  gap: 3px;
+.bow-equalizer {
+  width: 33px;
+  height: 25px;
+  display: block;
+  overflow: visible;
 }
 
-.sound-bars i {
-  width: 4px;
-  background: #201b1d;
+.bow-equalizer-lobe {
+  fill: var(--red);
+  stroke: var(--red-deep);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
 }
 
-.sound-bars i:nth-child(1) {
-  height: 10px;
+.bow-equalizer-knot {
+  fill: #e989ae;
+  stroke: var(--red-deep);
+  stroke-width: 1.5;
 }
 
-.sound-bars i:nth-child(2) {
-  height: 21px;
+.bow-equalizer-tail {
+  fill: var(--red);
+  stroke: var(--red-deep);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
 }
 
-.sound-bars i:nth-child(3) {
-  height: 15px;
-}
-
-.sound-bars i:nth-child(4) {
-  height: 7px;
+.bow-equalizer-shine {
+  fill: none;
+  stroke: rgb(255 255 255 / 78%);
+  stroke-width: 2;
+  stroke-linecap: round;
 }
 
 .hero-opening {
@@ -1745,24 +1750,16 @@ a:focus-visible,
   animation: music-disc-spin 7s linear infinite;
 }
 
-.music-card[data-playing='true'] .sound-bars i {
-  transform-origin: bottom;
-  animation: music-bar-pulse .62s ease-in-out infinite alternate;
+.music-card[data-playing='true'] .bow-equalizer {
+  animation: bow-equalizer-beat .72s ease-in-out infinite alternate;
 }
 
-.music-card[data-playing='true'] .sound-bars i:nth-child(2) {
-  animation-duration: .45s;
-  animation-delay: -.2s;
+.music-card[data-playing='true'] .bow-equalizer-shine-left {
+  animation: bow-equalizer-shine .72s ease-in-out infinite alternate;
 }
 
-.music-card[data-playing='true'] .sound-bars i:nth-child(3) {
-  animation-duration: .75s;
-  animation-delay: -.35s;
-}
-
-.music-card[data-playing='true'] .sound-bars i:nth-child(4) {
-  animation-duration: .52s;
-  animation-delay: -.1s;
+.music-card[data-playing='true'] .bow-equalizer-shine-right {
+  animation: bow-equalizer-shine .72s ease-in-out -.72s infinite alternate;
 }
 
 @keyframes music-disc-spin {
@@ -1771,13 +1768,23 @@ a:focus-visible,
   }
 }
 
-@keyframes music-bar-pulse {
+@keyframes bow-equalizer-beat {
   from {
-    transform: scaleY(.35);
+    transform: scale(.94);
   }
 
   to {
-    transform: scaleY(1.25);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bow-equalizer-shine {
+  from {
+    opacity: .25;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
@@ -1863,7 +1870,8 @@ a:focus-visible,
 @media (prefers-reduced-motion: reduce) {
 
   .music-card[data-playing='true']>.photo-slot,
-  .music-card[data-playing='true'] .sound-bars i {
+  .music-card[data-playing='true'] .bow-equalizer,
+  .music-card[data-playing='true'] .bow-equalizer-shine {
     animation: none;
   }
 }
@@ -2005,9 +2013,10 @@ a:focus-visible,
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--red);
-  color: #fff;
-  box-shadow: 0 7px 18px rgb(167 47 60 / 24%);
+  border: 1px solid #edcbd3;
+  background: #fff1f4;
+  color: var(--red);
+  box-shadow: 0 7px 18px rgb(167 47 60 / 15%);
   transition: transform .2s ease, box-shadow .2s ease;
 }
 
@@ -2018,12 +2027,6 @@ a:focus-visible,
 
 .music-toggle:active:not(:disabled) {
   transform: translateY(0) scale(.96);
-}
-
-.music-toggle .sound-bars i {
-  width: 3px;
-  border-radius: 999px;
-  background: currentColor;
 }
 
 .music-card>.photo-slot {
@@ -2324,10 +2327,124 @@ a:focus-visible,
   z-index: 1;
 }
 
-.footer > .kitty-accent {
-  width: 122px;
-  margin-bottom: 24px;
-  filter: drop-shadow(0 12px 20px rgb(49 6 14 / 20%));
+.kitty-farewell {
+  position: relative;
+  padding: clamp(42px, 5vw, 62px) 24px clamp(82px, 10vw, 120px);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  overflow: hidden;
+  text-align: center;
+  background:
+    radial-gradient(circle at 16% 26%, rgb(232 111 158 / 12%) 0 5px, transparent 6px),
+    radial-gradient(circle at 84% 38%, rgb(167 47 60 / 10%) 0 4px, transparent 5px),
+    linear-gradient(180deg, #fff 0%, #fff8fa 100%);
+}
+
+.kitty-farewell-art {
+  position: relative;
+  width: min(330px, 76vw);
+  min-height: 390px;
+  display: grid;
+  place-items: end center;
+}
+
+.kitty-farewell-art > img {
+  position: relative;
+  z-index: 2;
+  width: min(280px, 64vw);
+  max-height: 400px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 22px rgb(76 31 43 / 13%));
+}
+
+.kitty-farewell-art > .kitty-accent {
+  position: absolute;
+  top: 6%;
+  right: -3%;
+  z-index: 3;
+  width: 82px;
+  transform: rotate(13deg);
+}
+
+.kitty-gift {
+  position: absolute;
+  bottom: 7px;
+  z-index: 1;
+  width: 92px;
+  height: 78px;
+  border: 3px solid #71313e;
+  border-radius: 6px;
+  background: #f6c5d8;
+  box-shadow: 0 12px 22px rgb(90 37 53 / 11%);
+}
+
+.kitty-gift::before,
+.kitty-gift::after,
+.kitty-gift > i {
+  content: '';
+  position: absolute;
+  background: #e66f9e;
+}
+
+.kitty-gift::before {
+  inset: 0 36px;
+}
+
+.kitty-gift::after {
+  inset: 28px 0 auto;
+  height: 14px;
+}
+
+.kitty-gift > i {
+  top: -18px;
+  left: 50%;
+  width: 34px;
+  height: 22px;
+  border: 3px solid #71313e;
+  border-radius: 70% 35% 60% 30%;
+  background: #ed82ad;
+  transform: translateX(-90%) rotate(12deg);
+}
+
+.kitty-gift > i::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 29px;
+  width: 34px;
+  height: 22px;
+  border: 3px solid #71313e;
+  border-radius: 35% 70% 30% 60%;
+  background: #ed82ad;
+  transform: rotate(-24deg);
+}
+
+.kitty-gift-left {
+  left: -20px;
+  transform: rotate(-6deg) scale(.82);
+}
+
+.kitty-gift-right {
+  right: -26px;
+  bottom: 30px;
+  transform: rotate(7deg) scale(.68);
+}
+
+.kitty-farewell > p {
+  position: relative;
+  z-index: 2;
+  margin-top: 34px;
+  color: var(--red);
+  font: 400 clamp(24px, 3.5vw, 42px)/1.35 var(--serif);
+  letter-spacing: .025em;
+}
+
+.kitty-farewell > span {
+  margin-top: 15px;
+  color: var(--muted-ink);
+  font-size: 14px;
+  letter-spacing: .12em;
 }
 
 .footer > small {
@@ -2385,9 +2502,45 @@ a:focus-visible,
     width: 96px;
   }
 
-  .footer > .kitty-accent {
-    width: 104px;
+  .kitty-farewell {
+    padding: 30px 18px 78px;
   }
+
+  .kitty-farewell-art {
+    min-height: 330px;
+  }
+
+  .kitty-farewell-art > img {
+    max-height: 330px;
+  }
+
+  .kitty-farewell-art > .kitty-accent {
+    right: 2%;
+    width: 64px;
+  }
+
+  .kitty-gift {
+    width: 76px;
+    height: 64px;
+  }
+
+  .kitty-gift::before {
+    inset-inline: 29px;
+  }
+
+  .kitty-gift::after {
+    top: 23px;
+    height: 12px;
+  }
+
+  .kitty-gift-left {
+    left: -3px;
+  }
+
+  .kitty-gift-right {
+    right: -4px;
+  }
+
 }
 
 @media (max-width: 370px) {
