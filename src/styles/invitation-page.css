@@ -2158,3 +2158,334 @@ a:focus-visible,
     transition: none;
   }
 }
+
+/* Hello Kitty accents — intentionally sparse so the wedding remains the focus. */
+.kitty-accent {
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.kitty-fill-white {
+  fill: #fff;
+}
+
+.kitty-fill-red {
+  fill: #ea6d9e;
+}
+
+.kitty-fill-deep {
+  fill: #d94980;
+}
+
+.kitty-fill-pink {
+  fill: #ef78ad;
+}
+
+.kitty-fill-ink {
+  fill: #241f21;
+}
+
+.kitty-fill-yellow {
+  fill: #efb73e;
+}
+
+.kitty-outline {
+  stroke: #412524;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.kitty-outline-red {
+  stroke: #a72f3c;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.kitty-line,
+.kitty-line-soft {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.kitty-line {
+  stroke: #412524;
+  stroke-width: 5;
+}
+
+.kitty-nose {
+  stroke: #412524;
+  stroke-width: 3.5;
+}
+
+.kitty-bow-fold {
+  fill: none;
+  stroke: #b93669;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.kitty-line-soft {
+  stroke: rgb(255 255 255 / 52%);
+  stroke-width: 2;
+}
+
+.just-married {
+  position: relative;
+}
+
+.hero-bow {
+  position: absolute;
+  top: 42px;
+  z-index: 2;
+  width: clamp(42px, 7vw, 64px);
+  filter: drop-shadow(0 5px 8px rgb(136 31 48 / 13%));
+}
+
+.hero-bow-left {
+  left: 1%;
+  transform: rotate(-15deg);
+}
+
+.hero-bow-right {
+  right: 1%;
+  transform: rotate(14deg) scale(.78);
+  opacity: .55;
+}
+
+.child-role {
+  position: relative;
+}
+
+.child-role::before,
+.child-role::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  border-radius: 50%;
+  background: #ea6d9e;
+  pointer-events: none;
+}
+
+.child-role::before {
+  top: 3px;
+  width: 20px;
+  height: 15px;
+  box-shadow: 15px 0 0 #ea6d9e;
+  transform: rotate(-11deg);
+}
+
+.child-role::after {
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  background: #d94980;
+}
+
+.child-role:first-child::before {
+  right: 8px;
+}
+
+.child-role:first-child::after {
+  right: 12px;
+}
+
+.child-role:last-child::before {
+  left: 8px;
+  transform: rotate(11deg);
+}
+
+.child-role:last-child::after {
+  left: 19px;
+}
+
+.music-card > :not(.music-kitty) {
+  position: relative;
+  z-index: 1;
+}
+
+.music-kitty {
+  position: absolute;
+  right: 102px;
+  bottom: -45px;
+  z-index: 0;
+  width: 112px;
+  opacity: .08;
+  transform: rotate(-7deg);
+}
+
+.transition-happiness {
+  min-height: 154px;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  place-content: center;
+  align-items: center;
+  column-gap: 15px;
+}
+
+.transition-happiness .kitty-accent {
+  grid-row: 1 / span 2;
+  width: clamp(88px, 12vw, 124px);
+  filter: drop-shadow(0 10px 16px rgb(104 31 45 / 10%));
+}
+
+.transition-happiness > span {
+  align-self: end;
+}
+
+.transition-happiness > i {
+  align-self: start;
+  margin-top: 6px;
+  color: #bb858d;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: .24em;
+}
+
+.kitty-photo-frame {
+  position: relative;
+  width: min(630px, 82%);
+  margin: 78px auto 0;
+}
+
+.welcome .kitty-photo-frame > .photo-slot {
+  width: 100%;
+  margin: 0;
+}
+
+.kitty-photo-frame > .kitty-accent {
+  position: absolute;
+  top: -28px;
+  right: -28px;
+  z-index: 5;
+  width: clamp(72px, 9vw, 102px);
+  filter: drop-shadow(0 7px 10px rgb(123 31 46 / 15%));
+  transform: rotate(10deg);
+}
+
+.calendar-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.calendar-kitty {
+  position: absolute;
+  top: -13px;
+  right: -22px;
+  width: clamp(92px, 11vw, 132px);
+  opacity: .1;
+  transform: rotate(8deg);
+}
+
+.calendar-card > :not(.calendar-kitty) {
+  position: relative;
+  z-index: 1;
+}
+
+.footer > .kitty-accent {
+  width: 122px;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 12px 20px rgb(49 6 14 / 20%));
+}
+
+.footer > small {
+  margin-top: 13px;
+  color: rgb(255 255 255 / 45%);
+  font-size: 9px;
+  letter-spacing: .28em;
+}
+
+@media (max-width: 700px) {
+  .hero-bow {
+    top: 31px;
+    width: 42px;
+  }
+
+  .hero-bow-left {
+    left: 0;
+  }
+
+  .hero-bow-right {
+    right: 0;
+  }
+
+  .child-role::before {
+    width: 16px;
+    height: 12px;
+    box-shadow: 12px 0 0 #ea6d9e;
+  }
+
+  .child-role::after {
+    width: 9px;
+    height: 9px;
+  }
+
+  .music-kitty {
+    right: 72px;
+    bottom: -35px;
+    width: 88px;
+  }
+
+  .transition-happiness {
+    min-height: 136px;
+  }
+
+  .transition-happiness .kitty-accent {
+    width: 86px;
+  }
+
+  .kitty-photo-frame {
+    width: 88%;
+    margin-top: 62px;
+  }
+
+  .kitty-photo-frame > .kitty-accent {
+    top: -20px;
+    right: -20px;
+    width: 72px;
+  }
+
+  .calendar-kitty {
+    width: 96px;
+  }
+
+  .footer > .kitty-accent {
+    width: 104px;
+  }
+}
+
+@media (max-width: 370px) {
+  .hero-bow-right {
+    display: none;
+  }
+
+  .hero-bow-left {
+    left: -5px;
+  }
+
+  .music-kitty {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-bow-left,
+  .kitty-photo-frame > .kitty-accent {
+    animation: kitty-bow-float 4.2s ease-in-out infinite;
+  }
+
+  @keyframes kitty-bow-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+
+    50% {
+      translate: 0 -4px;
+    }
+  }
+}

@@ -5,6 +5,7 @@ import PhotoSlot from '@/components/PhotoSlot.vue';
 import PhotoLightbox from '@/components/PhotoLightbox.vue';
 import MapDirections from '@/components/MapDirections.vue';
 import SaveInvitationImage from '@/components/SaveInvitationImage.vue';
+import KittyAccent from '@/components/KittyAccent.vue';
 
 const now = ref(Date.now());
 const eventTime = new Date('2026-10-03T17:58:00+08:00').getTime();
@@ -164,6 +165,8 @@ onBeforeUnmount(() => {
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <header class="just-married">
+        <KittyAccent class="hero-bow hero-bow-left" variant="bow" />
+        <KittyAccent class="hero-bow hero-bow-right" variant="bow" />
         <h1 id="hero-title">
           <svg class="title-arc" viewBox="0 0 500 100" aria-hidden="true" focusable="false">
             <defs><path id="title-arc-path" d="M 48 84 Q 250 -14 452 84" /></defs>
@@ -185,6 +188,7 @@ onBeforeUnmount(() => {
       </header>
       <PhotoSlot class="hero-artwork" :src="imageSlots.hero.src" :label="imageSlots.hero.label" :alt="imageSlots.hero.alt" ratio="1 / 1" eager />
       <div class="music-card" :data-playing="isPlaying" :data-ready="audioReady" :aria-label="`${music.title}，${music.artist}`">
+        <KittyAccent class="music-kitty" variant="peek" />
         <div class="music-copy">
           <div class="music-meta"><div><strong>{{ music.title }}</strong><span class="music-artist">{{ music.artist }}</span></div><span class="music-status">{{ isPlaying ? 'PLAYING' : 'READY' }}</span></div>
           <div class="music-timeline">
@@ -206,13 +210,20 @@ onBeforeUnmount(() => {
       <div class="countdown" aria-label="距离婚礼的倒计时"><div v-for="item in countdown" :key="item.label"><strong>{{ item.value }}</strong><span>{{ item.label }}</span></div></div>
     </section>
 
-    <div class="transition-happiness" role="img" aria-label="双喜">「囍」</div>
+    <div class="transition-happiness" role="img" aria-label="双喜">
+      <KittyAccent variant="face" />
+      <span>「囍」</span>
+      <i aria-hidden="true">HELLO, LOVE</i>
+    </div>
 
     <section id="welcome" class="welcome section-shell">
       <p class="section-mark">WELCOME TO OUR WEDDING</p>
       <h2>嘿，当你看到这封邀请，<br />我们的婚礼已经进入倒计时。</h2>
       <p>很开心我们出现在彼此的生命中，<br />也很开心能把这份喜悦，认真地分享给你。</p>
-      <PhotoSlot :src="imageSlots.portrait.src" :label="imageSlots.portrait.label" :alt="imageSlots.portrait.alt" ratio="4 / 5" previewable reveal reveal-direction="up" @preview="openPreview(0)" />
+      <div class="kitty-photo-frame">
+        <PhotoSlot :src="imageSlots.portrait.src" :label="imageSlots.portrait.label" :alt="imageSlots.portrait.alt" ratio="4 / 5" previewable reveal reveal-direction="up" @preview="openPreview(0)" />
+        <KittyAccent variant="bow" />
+      </div>
       <p class="names-line">张子乔 <i>&amp;</i> 陈美嘉</p>
     </section>
 
@@ -242,6 +253,7 @@ onBeforeUnmount(() => {
       <div class="details-heading"><p class="section-mark">WEDDING TIME</p><h2 id="details-title">良辰已定，<br /><em>静候卿来。</em></h2></div>
       <div class="date-layout">
         <div class="calendar-card">
+          <KittyAccent class="calendar-kitty" variant="face" />
           <div class="calendar-title"><strong>10 <small>/ 03</small></strong><span>— 2026 —</span></div>
           <div class="weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
           <div class="calendar-grid"><span v-for="blank in 3" :key="`blank-${blank}`" aria-hidden="true" /><span v-for="day in calendarDays" :key="day" :class="{ chosen: day === 3 }" :aria-current="day === 3 ? 'date' : undefined">{{ day }}</span></div>
@@ -259,7 +271,7 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
-    <footer class="footer"><p>有你在，才是圆满。</p><strong>张子乔 <i>&amp;</i> 陈美嘉</strong><span>2026.10.03 · 不见不散</span></footer>
+    <footer class="footer"><KittyAccent variant="face" /><p>有你在，才是圆满。</p><strong>张子乔 <i>&amp;</i> 陈美嘉</strong><span>2026.10.03 · 不见不散</span><small>WITH LOVE &amp; A LITTLE BOW</small></footer>
   </main>
   <PhotoLightbox v-model="previewIndex" :photos="previewPhotos" />
 </template>
