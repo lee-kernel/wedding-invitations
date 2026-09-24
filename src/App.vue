@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { emojiBlast } from 'emoji-blast';
 import { imageSlots, music, photographs, wedding } from '@/data/wedding';
 import PhotoSlot from '@/components/PhotoSlot.vue';
 import PhotoLightbox from '@/components/PhotoLightbox.vue';
@@ -48,6 +49,48 @@ const previewIndex = ref<number | null>(null);
 function openPreview(index: number) {
   stopAutoScroll();
   previewIndex.value = index;
+}
+
+function celebrateGift(event: MouseEvent) {
+  const gift = event.currentTarget as HTMLElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    const baseTransform = getComputedStyle(gift).transform;
+    gift.animate(
+      [
+        { transform: baseTransform },
+        { transform: `${baseTransform} scale(1.08)` },
+        { transform: baseTransform },
+      ],
+      { duration: 320, easing: 'ease-out' },
+    );
+  }
+
+  if (reduceMotion) return;
+
+  const bounds = gift.getBoundingClientRect();
+  emojiBlast({
+    className: 'wedding-emoji-blast',
+    emojiCount: () => Math.floor(Math.random() * 7) + 18,
+    emojis: ['🌸', '💮', '💕', '💖', '✨', '🎀'],
+    physics: {
+      fontSize: { min: 17, max: 30 },
+      gravity: 0.28,
+      initialVelocities: {
+        rotation: { min: -8, max: 8 },
+        x: { min: -8, max: 8 },
+        y: { min: -17, max: -11 },
+      },
+      opacityDecay: 100,
+      rotation: { min: -35, max: 35 },
+      rotationDeceleration: 0.97,
+    },
+    position: {
+      x: bounds.left + bounds.width / 2,
+      y: bounds.top + bounds.height * 0.28,
+    },
+    uniqueness: 6,
+  });
 }
 
 async function tryStartMusic() {
@@ -283,9 +326,9 @@ onBeforeUnmount(() => {
 
     <section id="kitty-farewell" class="kitty-farewell" aria-label="Hello Kitty 婚礼感谢场景">
       <div class="kitty-farewell-art">
-        <span class="kitty-gift kitty-gift-left" aria-hidden="true"><i /></span>
+        <button class="kitty-gift kitty-gift-left" type="button" aria-label="打开左侧礼物，撒下祝福" @click="celebrateGift"><i /></button>
         <img :src="kittyScene" alt="完整造型的 Hello Kitty" loading="lazy" draggable="false" />
-        <span class="kitty-gift kitty-gift-right" aria-hidden="true"><i /></span>
+        <button class="kitty-gift kitty-gift-right" type="button" aria-label="打开右侧礼物，撒下祝福" @click="celebrateGift"><i /></button>
         <KittyAccent variant="bow" />
       </div>
       <p>Thank you for being part of our story.</p>
