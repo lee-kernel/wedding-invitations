@@ -2371,7 +2371,7 @@ a:focus-visible,
   --gift-body-height: 76px;
   position: absolute;
   bottom: 7px;
-  z-index: 1;
+  z-index: 4;
   width: 108px;
   height: 112px;
   padding: 0;
@@ -2382,6 +2382,25 @@ a:focus-visible,
   cursor: pointer;
   isolation: isolate;
   touch-action: manipulation;
+}
+
+.kitty-gift.is-opening {
+  animation: kitty-gift-open .36s ease-out;
+}
+
+@keyframes kitty-gift-open {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  42% {
+    translate: 0 -7px;
+  }
+
+  68% {
+    translate: 0 2px;
+  }
 }
 
 .kitty-gift:hover::before {
@@ -2485,7 +2504,7 @@ a:focus-visible,
 
 .kitty-gift-left {
   left: -20px;
-  transform: rotate(-6deg) scale(.9);
+  transform: rotate(-6deg) scale(.76);
 }
 
 .kitty-gift-right {

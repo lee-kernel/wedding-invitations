@@ -54,43 +54,39 @@ function openPreview(index: number) {
 function celebrateGift(event: MouseEvent) {
   const gift = event.currentTarget as HTMLElement;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduceMotion) {
-    const baseTransform = getComputedStyle(gift).transform;
-    gift.animate(
-      [
-        { transform: baseTransform },
-        { transform: `${baseTransform} scale(1.08)` },
-        { transform: baseTransform },
-      ],
-      { duration: 320, easing: 'ease-out' },
-    );
-  }
-
-  if (reduceMotion) return;
-
   const bounds = gift.getBoundingClientRect();
   emojiBlast({
     className: 'wedding-emoji-blast',
-    emojiCount: () => Math.floor(Math.random() * 7) + 18,
+    emojiCount: reduceMotion ? 6 : () => Math.floor(Math.random() * 7) + 18,
     emojis: ['🌸', '💮', '💕', '💖', '✨', '🎀'],
     physics: {
-      fontSize: { min: 17, max: 30 },
-      gravity: 0.28,
+      fontSize: reduceMotion ? { min: 16, max: 21 } : { min: 17, max: 30 },
+      gravity: reduceMotion ? 0.4 : 0.28,
       initialVelocities: {
-        rotation: { min: -8, max: 8 },
-        x: { min: -8, max: 8 },
-        y: { min: -17, max: -11 },
+        rotation: reduceMotion ? { min: -2, max: 2 } : { min: -8, max: 8 },
+        x: reduceMotion ? { min: -3, max: 3 } : { min: -8, max: 8 },
+        y: reduceMotion ? { min: -8, max: -5 } : { min: -17, max: -11 },
       },
       opacityDecay: 100,
-      rotation: { min: -35, max: 35 },
+      rotation: reduceMotion ? { min: -8, max: 8 } : { min: -35, max: 35 },
       rotationDeceleration: 0.97,
     },
     position: {
       x: bounds.left + bounds.width / 2,
       y: bounds.top + bounds.height * 0.28,
     },
+    process(element) {
+      element.setAttribute('aria-hidden', 'true');
+    },
     uniqueness: 6,
   });
+
+  if (!reduceMotion) {
+    gift.classList.remove('is-opening');
+    void gift.offsetWidth;
+    gift.classList.add('is-opening');
+    window.setTimeout(() => gift.classList.remove('is-opening'), 380);
+  }
 }
 
 async function tryStartMusic() {
@@ -326,9 +322,9 @@ onBeforeUnmount(() => {
 
     <section id="kitty-farewell" class="kitty-farewell" aria-label="Hello Kitty 婚礼感谢场景">
       <div class="kitty-farewell-art">
-        <button class="kitty-gift kitty-gift-left" type="button" aria-label="打开左侧礼物，撒下祝福" @click="celebrateGift"><i /></button>
+        <button class="kitty-gift kitty-gift-left" type="button" aria-label="打开左侧礼物，撒下祝福" @click.stop="celebrateGift"><i /></button>
         <img :src="kittyScene" alt="完整造型的 Hello Kitty" loading="lazy" draggable="false" />
-        <button class="kitty-gift kitty-gift-right" type="button" aria-label="打开右侧礼物，撒下祝福" @click="celebrateGift"><i /></button>
+        <button class="kitty-gift kitty-gift-right" type="button" aria-label="打开右侧礼物，撒下祝福" @click.stop="celebrateGift"><i /></button>
         <KittyAccent variant="bow" />
       </div>
       <p>Thank you for being part of our story.</p>
