@@ -2368,30 +2368,32 @@ a:focus-visible,
 }
 
 .kitty-gift {
+  --gift-body-height: 76px;
   position: absolute;
   bottom: 7px;
   z-index: 1;
-  width: 92px;
-  height: 78px;
+  width: 108px;
+  height: 112px;
   padding: 0;
   appearance: none;
-  border: 3px solid #71313e;
-  border-radius: 6px;
-  background: #f6c5d8;
-  box-shadow: 0 12px 22px rgb(90 37 53 / 11%);
+  overflow: visible;
+  border: 0;
+  background: transparent;
   cursor: pointer;
-  transition: filter .2s ease, box-shadow .2s ease;
+  isolation: isolate;
   touch-action: manipulation;
 }
 
-.kitty-gift:hover {
+.kitty-gift:hover::before {
   filter: brightness(1.04) saturate(1.08);
-  box-shadow: 0 15px 27px rgb(90 37 53 / 17%);
+  box-shadow: 0 17px 30px rgb(90 37 53 / 18%), inset 0 7px 0 rgb(255 255 255 / 22%);
+  transform: translateY(-2px);
 }
 
 .kitty-gift:focus-visible {
   outline: 3px solid var(--red);
-  outline-offset: 7px;
+  outline-offset: 3px;
+  border-radius: 14px;
 }
 
 .wedding-emoji-blast {
@@ -2401,43 +2403,78 @@ a:focus-visible,
 
 .kitty-gift::before,
 .kitty-gift::after,
-.kitty-gift > i {
-  content: '';
-  position: absolute;
-  background: #e66f9e;
-}
-
-.kitty-gift::before {
-  inset: 0 36px;
-}
-
-.kitty-gift::after {
-  inset: 28px 0 auto;
-  height: 14px;
-}
-
-.kitty-gift > i {
-  top: -18px;
-  left: 50%;
-  width: 34px;
-  height: 22px;
-  border: 3px solid #71313e;
-  border-radius: 70% 35% 60% 30%;
-  background: #ed82ad;
-  transform: translateX(-90%) rotate(12deg);
-}
-
+.kitty-gift > i,
+.kitty-gift > i::before,
 .kitty-gift > i::after {
   content: '';
   position: absolute;
-  top: -3px;
-  left: 29px;
-  width: 34px;
-  height: 22px;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.kitty-gift::before {
+  right: 8px;
+  bottom: 0;
+  left: 8px;
+  z-index: 1;
+  height: var(--gift-body-height);
   border: 3px solid #71313e;
-  border-radius: 35% 70% 30% 60%;
+  border-radius: 7px 7px 11px 11px;
+  background:
+    linear-gradient(90deg, transparent 0 39%, #e66f9e 39% 61%, transparent 61%),
+    linear-gradient(180deg, transparent 0 43%, #ed8bae 43% 59%, transparent 59%),
+    linear-gradient(145deg, #ffe7ef 0%, #f4afc8 100%);
+  box-shadow: 0 13px 24px rgb(90 37 53 / 13%), inset 0 7px 0 rgb(255 255 255 / 22%);
+  transition: filter .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.kitty-gift::after {
+  right: 0;
+  bottom: calc(var(--gift-body-height) - 9px);
+  left: 0;
+  z-index: 2;
+  height: 23px;
+  border: 3px solid #71313e;
+  border-radius: 7px;
+  background:
+    linear-gradient(90deg, transparent 0 40%, #df5e8e 40% 60%, transparent 60%),
+    linear-gradient(180deg, #ffdce8 0%, #f0a2bd 100%);
+  box-shadow: 0 5px 8px rgb(90 37 53 / 12%), inset 0 4px 0 rgb(255 255 255 / 25%);
+}
+
+.kitty-gift > i {
+  bottom: calc(var(--gift-body-height) + 12px);
+  left: 50%;
+  z-index: 4;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #71313e;
+  border-radius: 50%;
+  background: #e66f9e;
+  transform: translateX(-50%);
+}
+
+.kitty-gift > i::before,
+.kitty-gift > i::after {
+  top: -7px;
+  z-index: -1;
+  width: 34px;
+  height: 25px;
+  border: 3px solid #71313e;
   background: #ed82ad;
-  transform: rotate(-24deg);
+  box-shadow: inset 4px 4px 0 rgb(255 255 255 / 25%);
+}
+
+.kitty-gift > i::before {
+  right: 8px;
+  border-radius: 75% 35% 60% 35%;
+  transform: rotate(12deg);
+}
+
+.kitty-gift > i::after {
+  left: 8px;
+  border-radius: 35% 75% 35% 60%;
+  transform: rotate(-12deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2448,13 +2485,13 @@ a:focus-visible,
 
 .kitty-gift-left {
   left: -20px;
-  transform: rotate(-6deg) scale(.82);
+  transform: rotate(-6deg) scale(.9);
 }
 
 .kitty-gift-right {
   right: -26px;
   bottom: 30px;
-  transform: rotate(7deg) scale(.68);
+  transform: rotate(7deg) scale(.76);
 }
 
 .kitty-farewell > p {
@@ -2546,17 +2583,9 @@ a:focus-visible,
   }
 
   .kitty-gift {
-    width: 76px;
-    height: 64px;
-  }
-
-  .kitty-gift::before {
-    inset-inline: 29px;
-  }
-
-  .kitty-gift::after {
-    top: 23px;
-    height: 12px;
+    --gift-body-height: 64px;
+    width: 90px;
+    height: 96px;
   }
 
   .kitty-gift-left {
