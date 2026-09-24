@@ -58,7 +58,7 @@ function celebrateGift(event: MouseEvent) {
   emojiBlast({
     className: 'wedding-emoji-blast',
     emojiCount: reduceMotion ? 6 : () => Math.floor(Math.random() * 7) + 18,
-    emojis: ['🌸', '💮', '💕', '💖', '✨', '🎀'],
+    emojis: ['🎉', '🎁', '💕', '', '✨', '🎀'],
     physics: {
       fontSize: reduceMotion ? { min: 16, max: 21 } : { min: 17, max: 30 },
       gravity: reduceMotion ? 0.4 : 0.28,
