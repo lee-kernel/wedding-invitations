@@ -1,5 +1,7 @@
 # wedding-invitations
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE) · [![LinuxDO](https://img.shields.io/badge/community-LinuxDO-FFA500)](https://linux.do/)
+
 一个使用 Vue 3、TypeScript 和 Vite 构建的响应式单页婚礼请柬，支持桌面端与手机端浏览。
 
 ## 主要功能
@@ -141,3 +143,11 @@ src/
   styles/                   页面及保存图片样式
   App.vue                   主页面
 ```
+
+## 社区交流
+
+欢迎到 [LinuxDO](https://linux.do/) 社区交流 AI 工具与提示词使用心得。
+
+## 开源协议
+
+CueTuck 基于 [MIT 许可证](LICENSE) 开源。第三方依赖、社区样例与素材遵循各自的许可声明。
