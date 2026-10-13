@@ -150,4 +150,4 @@ src/
 
 ## 开源协议
 
-CueTuck 基于 [MIT 许可证](LICENSE) 开源。第三方依赖、社区样例与素材遵循各自的许可声明。
+wedding-invitations 基于 [MIT 许可证](LICENSE) 开源。第三方依赖、社区样例与素材遵循各自的许可声明。
