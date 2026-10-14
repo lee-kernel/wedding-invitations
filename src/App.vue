@@ -10,9 +10,11 @@ import KittyAccent from '@/components/KittyAccent.vue';
 import FloatingCherryBlossoms from '@/components/FloatingCherryBlossoms.vue';
 import OpeningEntrance from '@/components/OpeningEntrance.vue';
 import StoryJourney from '@/components/StoryJourney.vue';
+import StoryAlbum from '@/components/StoryAlbum.vue';
+import RsvpCard from '@/components/RsvpCard.vue';
 
 const now = ref(Date.now());
-const eventTime = new Date('2026-10-03T17:58:00+08:00').getTime();
+const eventTime = new Date('2027-01-31T17:58:00+08:00').getTime();
 const kittyScene = `${import.meta.env.BASE_URL}images/invitation/hello-kitty-scene.svg`;
 let timer = 0;
 const countdown = computed(() => {
@@ -39,7 +41,6 @@ const previewPhotos = [
   { src: imageSlots.focus.src, alt: imageSlots.focus.alt },
   { src: imageSlots.wide.src, alt: imageSlots.wide.alt },
   { src: imageSlots.close.src, alt: imageSlots.close.alt },
-  { src: imageSlots.date.src, alt: imageSlots.date.alt },
 ];
 const previewIndex = ref<number | null>(null);
 
@@ -147,7 +148,10 @@ onBeforeUnmount(() => {
   <a v-if="hasOpened" class="skip-link" href="#wedding-details">跳到婚礼时间与地点</a>
 
   <main id="top" tabindex="-1" :inert="!hasOpened" :aria-hidden="!hasOpened">
-    <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-cover">
+      <KittyAccent class="cover-decoration cover-decoration-left" variant="bow" />
+      <KittyAccent class="cover-decoration cover-decoration-right" variant="bow" />
+      <section class="hero" aria-labelledby="hero-title">
       <header class="just-married">
         <KittyAccent class="hero-bow hero-bow-left" variant="bow" />
         <KittyAccent class="hero-bow hero-bow-right" variant="bow" />
@@ -202,6 +206,7 @@ onBeforeUnmount(() => {
       </div>
       <div class="countdown" aria-label="距离婚礼的倒计时"><div v-for="item in countdown" :key="item.label"><strong>{{ item.value }}</strong><span>{{ item.label }}</span></div></div>
     </section>
+    </div>
 
     <div class="transition-happiness" role="img" aria-label="双喜">
       <KittyAccent variant="face" />
@@ -236,10 +241,7 @@ onBeforeUnmount(() => {
         <div><span>OUR STORY</span><h3>敬我们，<br />也敬余生。</h3><p>有些欢喜，想当面说。<br />有些时刻，想与你一起。</p></div>
       </div>
       <StoryJourney />
-      <div class="story-wide">
-        <PhotoSlot :src="imageSlots.wide.src" :label="imageSlots.wide.label" :alt="imageSlots.wide.alt" ratio="16 / 9" previewable reveal reveal-direction="left" @preview="openPreview(4)" />
-        <PhotoSlot :src="imageSlots.close.src" :label="imageSlots.close.label" :alt="imageSlots.close.alt" ratio="16 / 9" previewable reveal reveal-direction="right" :reveal-delay="120" @preview="openPreview(5)" />
-      </div>
+      <StoryAlbum @preview="openPreview" />
     </section>
 
     <section id="wedding-details" class="details section-shell" aria-labelledby="details-title">
@@ -247,12 +249,12 @@ onBeforeUnmount(() => {
       <div class="date-layout">
         <div class="calendar-card">
           <KittyAccent class="calendar-kitty" variant="face" />
-          <div class="calendar-title"><strong>10 <small>/ 03</small></strong><span>— 2026 —</span></div>
+          <div class="calendar-title"><strong>01 <small>/ 31</small></strong><span>— 2027 —</span></div>
           <div class="weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
-          <div class="calendar-grid"><span v-for="blank in 3" :key="`blank-${blank}`" aria-hidden="true" /><span v-for="day in calendarDays" :key="day" :class="{ chosen: day === 3 }" :aria-current="day === 3 ? 'date' : undefined">{{ day }}</span></div>
+          <div class="calendar-grid"><span v-for="blank in 4" :key="`blank-${blank}`" aria-hidden="true" /><span v-for="day in calendarDays" :key="day" :class="{ chosen: day === 31 }" :aria-current="day === 31 ? 'date' : undefined">{{ day }}</span></div>
           <p>{{ wedding.dateLong }} · {{ wedding.day }}<br />{{ wedding.lunar }}</p>
         </div>
-        <PhotoSlot :src="imageSlots.date.src" :label="imageSlots.date.label" :alt="imageSlots.date.alt" ratio="4 / 5" previewable reveal reveal-direction="right" @preview="openPreview(6)" />
+        <RsvpCard />
       </div>
       <div class="venue-card">
         <div class="venue-copy">
@@ -275,7 +277,7 @@ onBeforeUnmount(() => {
       <span>谢谢你，来见证我们的幸福。</span>
     </section>
 
-    <footer class="footer"><p>有你在，才是圆满。</p><strong>张子乔 <i>&amp;</i> 陈美嘉</strong><span>2026.10.03 · 不见不散</span><small>WITH LOVE &amp; A LITTLE BOW</small></footer>
+    <footer class="footer"><p>有你在，才是圆满。</p><strong>张子乔 <i>&amp;</i> 陈美嘉</strong><span>2027.01.31 · 不见不散</span><small>WITH LOVE &amp; A LITTLE BOW</small></footer>
   </main>
   <PhotoLightbox v-model="previewIndex" :photos="previewPhotos" />
 </template>

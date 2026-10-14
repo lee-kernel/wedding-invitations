@@ -108,3 +108,29 @@
   .image-save-actions > p { font-size: 12px !important; }
   .image-save-actions .button { min-height: 44px; margin-top: 7px; }
 }
+
+/* A keepsake preview with the complete invitation visible above the actions. */
+.image-save-dialog { background: #fffafb !important; }
+.image-save-header { padding: 22px 22px 16px; border-bottom: 0; background: #fffafb; }
+.image-save-header > div { gap: 8px; }
+.image-save-header span { color: #b07c8d; font-size: 9px; letter-spacing: .2em; }
+.image-save-header h2 { font: 400 23px/1.4 var(--serif) !important; color: var(--red-deep); }
+.image-save-header button { width: 34px; height: 34px; border: 1px solid #ecd3dc; background: #fff; }
+.image-save-header button svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+.image-save-summary { display: flex; flex: none; align-items: center; justify-content: space-between; gap: 12px; padding: 0 22px 17px; color: #a17c89; font-size: 11px; }
+.image-save-summary i { margin-inline: 5px; font: italic 13px Georgia, serif; }
+.image-save-summary > span:last-child { font-family: var(--numerals); letter-spacing: .1em; }
+.image-save-scroll { position: relative; flex: 1 1 auto; display: grid; place-items: center; padding: 20px; background: radial-gradient(ellipse at 50% 30%, #fff7fa, #f8e5ed); border-block: 1px solid #f0dce3; }
+.invitation-image { width: auto; max-width: 100%; height: auto; max-height: min(51dvh, 590px); object-fit: contain; border: 5px solid #fff; border-radius: 3px; box-shadow: 0 9px 25px #71313e22; }
+.image-save-bow { position: absolute; top: 10px; right: 12px; width: 48px; transform: rotate(12deg); opacity: .65; pointer-events: none; }
+.image-save-actions { padding: 17px 22px 20px; border-top: 0; background: #fffafb; }
+.image-save-actions > .image-save-hint { font-size: 12px !important; text-align: center; color: #997784 !important; }
+.image-save-buttons { display: flex; gap: 10px; }
+.image-save-buttons .button { flex: 1; min-width: 0; min-height: 46px; margin-top: 14px; border-radius: 10px; font-size: 13px; justify-content: center; gap: 8px; }
+.image-save-actions > .image-save-format { margin-top: 12px; color: #b397a2 !important; font-size: 9px !important; letter-spacing: .05em; text-align: center; }
+.image-save-loading { padding: 40px 14px; text-align: center; color: #a75d75; }
+.image-save-loading > span { display: block; margin-bottom: 18px; font: 42px var(--hand); }
+.image-save-loading p { font: 18px var(--serif); }.image-save-loading small { display: block; margin-top: 12px; color: #af8c9a; font-size: 11px; }
+.image-save-loading .button { margin-top: 22px; }
+@media (max-width: 520px) { .image-save-header { padding: 19px 17px 14px; }.image-save-header h2 { font-size: 20px !important; }.image-save-summary { padding-inline: 17px; }.image-save-actions { padding-inline: 17px; }.image-save-scroll { padding: 15px; } }
+@media (max-height: 650px) { .image-save-header { padding-block: 12px 8px; }.image-save-summary { padding-bottom: 10px; }.image-save-scroll { padding: 10px; }.invitation-image { max-height: 40dvh; }.image-save-actions { padding-block: 10px; }.image-save-buttons .button { margin-top: 8px; min-height: 40px; }.image-save-actions > .image-save-format { margin-top: 7px; } }

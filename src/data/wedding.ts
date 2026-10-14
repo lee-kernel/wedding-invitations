@@ -1,19 +1,27 @@
 export const wedding = {
   groom: '张子乔',
   bride: '陈美嘉',
-  date: '2026.10.03',
-  dateLong: '2026 年 10 月 3 日',
-  lunar: '农历八月廿三',
-  day: '星期六',
+  date: '2027.01.31',
+  dateLong: '2027 年 1 月 31 日',
+  lunar: '农历腊月廿四',
+  day: '星期日',
   venue: '黄山市歙县徽苑一楼',
   room: '2号厅',
   address: '黄山市歙县徽苑一楼，2号厅',
   welcome: '17:28',
   ceremony: '17:58',
+  // 填入腾讯问卷的完整 HTTPS 链接后，RSVP 按钮即可跳转。
+  rsvpUrl: '',
 };
 
 const invitationImage = (file: string) => `${import.meta.env.BASE_URL}images/invitation/${file}`;
 
+
+// 独立的微信头像，替换文件或修改这里的路径即可，不影响首屏人物图片。
+export const chatProfiles = {
+  groom: { avatar: invitationImage('chat-groom.webp') },
+  bride: { avatar: invitationImage('chat-bride.webp') },
+};
 
 export const music = {
   title: '达尔文',

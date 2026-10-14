@@ -161,3 +161,15 @@ wedding-invitations 基于 [MIT 许可证](LICENSE) 开源。第三方依赖、�
 ### 故事旅程
 
 四段故事使用 `StoryJourney.vue` 展示，参考 [wedding-website 的 JourneyTrail](https://github.com/deepeshmi26/wedding-website/blob/main/src/app/JourneyTrail.tsx) 的长滚动区域与 sticky 舞台方式，使用 SVG 路径长度控制粉色婚车的位置、转向和路线进度。支持鼠标、触屏和键盘原生滚动，倒滚可回看；路线结束后恢复普通浏览。系统减少动态效果时显示静态故事列表。婚车为本项目绘制的 SVG，不依赖外部图片或动画库。
+
+首屏使用奶白浅粉渐变、低透明度蝴蝶结和淡纸纹背景，以白色弧形边缘衔接第二屏；背景只作用于首屏区域。
+
+### 聊天与相册
+
+原两张横图区域由 `StoryAlbum.vue` 替换为文字、模拟微信聊天和横向相册，参考 wedding-website 的 StorySection / StoryPhotoCarousel 布局创意。对话为展示用模拟文案；相册复用现有图片槽位（横向照片、横向近景、双人竖图、故事主图），支持触屏滑动、鼠标拖动、方向键和按钮切换，以及点击预览。缺失的图片仍展示原有占位，替换 `public/images/invitation/` 对应文件即可。
+
+模拟微信界面包含手机状态栏、单聊标题、照片头像、白色/绿色气泡、底部静态输入区和手势条。模拟聊天保留原文案，输入区仅作视觉展示。头像通过 `src/data/wedding.ts` 的 `chatProfiles` 配置，也可直接替换 `public/images/invitation/chat-groom.webp`、`chat-bride.webp`。
+
+### RSVP 赴约回执
+
+日期配图已替换为浅粉信笺式 `RsvpCard.vue`，左侧日历保留。参考 wedding-website 的 RsvpSection，使用本项目配色与 CSS 邮戳。配置 `src/data/wedding.ts` 中的 `wedding.rsvpUrl` 为腾讯问卷完整 HTTPS 链接即可启用跳转；未配置时按钮禁用并显示“赴约回执即将开放”。问卷在新标签页打开。
