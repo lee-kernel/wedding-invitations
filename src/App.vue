@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { emojiBlast } from 'emoji-blast';
-import { imageSlots, music, photographs, wedding } from '@/data/wedding';
+import { imageSlots, music, wedding } from '@/data/wedding';
 import PhotoSlot from '@/components/PhotoSlot.vue';
 import PhotoLightbox from '@/components/PhotoLightbox.vue';
 import MapDirections from '@/components/MapDirections.vue';
 import SaveInvitationImage from '@/components/SaveInvitationImage.vue';
 import KittyAccent from '@/components/KittyAccent.vue';
+import FloatingCherryBlossoms from '@/components/FloatingCherryBlossoms.vue';
+import OpeningEntrance from '@/components/OpeningEntrance.vue';
+import StoryJourney from '@/components/StoryJourney.vue';
 
 const now = ref(Date.now());
 const eventTime = new Date('2026-10-03T17:58:00+08:00').getTime();
@@ -25,16 +28,10 @@ const calendarDays = Array.from({ length: 31 }, (_, index) => index + 1);
 const audio = ref<HTMLAudioElement | null>(null);
 const audioReady = ref(false);
 const isPlaying = ref(false);
-const showMusicUnlock = ref(false);
+const hasOpened = ref(false);
 const audioCurrentTime = ref(0);
 const audioDuration = ref(0);
 const audioProgress = computed(() => audioDuration.value > 0 ? Math.min(100, (audioCurrentTime.value / audioDuration.value) * 100) : 0);
-let autoScrollFrame = 0;
-let autoScrollDelay = 0;
-let lastScrollTime = 0;
-let autoScrollCancelled = false;
-let autoScrollStarted = false;
-const autoScrollSpeed = 34;
 const previewPhotos = [
   { src: imageSlots.portrait.src, alt: imageSlots.portrait.alt },
   { src: imageSlots.storyLeft.src, alt: imageSlots.storyLeft.alt },
@@ -47,7 +44,6 @@ const previewPhotos = [
 const previewIndex = ref<number | null>(null);
 
 function openPreview(index: number) {
-  stopAutoScroll();
   previewIndex.value = index;
 }
 
@@ -92,15 +88,12 @@ function celebrateGift(event: MouseEvent) {
 async function tryStartMusic() {
   if (!audio.value) return false;
   if (!audio.value.paused) {
-    showMusicUnlock.value = false;
     return true;
   }
   try {
     await audio.value.play();
-    showMusicUnlock.value = false;
     return true;
   } catch {
-    showMusicUnlock.value = true;
     return false;
   }
 }
@@ -129,80 +122,31 @@ function formatAudioTime(seconds: number) {
   return `${minutes}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
 }
 
-function stopAutoScroll() {
-  autoScrollCancelled = true;
-  autoScrollStarted = false;
-  window.clearTimeout(autoScrollDelay);
-  window.cancelAnimationFrame(autoScrollFrame);
-  document.documentElement.classList.remove('auto-scrolling');
+function beginInvitation() {
+  void tryStartMusic();
 }
 
-function scrollPage(timestamp: number) {
-  if (autoScrollCancelled) return;
-  const elapsed = Math.min(timestamp - lastScrollTime, 50);
-  lastScrollTime = timestamp;
-  window.scrollBy(0, autoScrollSpeed * elapsed / 1000);
-  const reachedBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
-  if (!reachedBottom) autoScrollFrame = window.requestAnimationFrame(scrollPage);
-  else {
-    autoScrollStarted = false;
-    document.documentElement.classList.remove('auto-scrolling');
-  }
-}
-
-function startAutoScroll() {
-  if (autoScrollCancelled || autoScrollStarted || showMusicUnlock.value) return;
-  autoScrollStarted = true;
-  document.documentElement.classList.add('auto-scrolling');
-  lastScrollTime = performance.now();
-  autoScrollFrame = window.requestAnimationFrame(scrollPage);
-}
-
-async function handleFirstInteraction() {
-  const started = await tryStartMusic();
-  if (started) {
-    startAutoScroll();
-    document.removeEventListener('pointerdown', handleFirstInteraction);
-    document.removeEventListener('keydown', handleFirstInteraction);
-  }
-}
-
-async function unlockExperience() {
-  const started = await tryStartMusic();
-  if (started) startAutoScroll();
+function finishEntrance() {
+  hasOpened.value = true;
+  requestAnimationFrame(() => document.querySelector<HTMLElement>('#top')?.focus({ preventScroll: true }));
 }
 
 onMounted(() => {
   timer = window.setInterval(() => { now.value = Date.now(); }, 1000);
-  void tryStartMusic();
-  autoScrollDelay = window.setTimeout(startAutoScroll, 1200);
-  document.addEventListener('pointerdown', handleFirstInteraction, { passive: true });
-  document.addEventListener('keydown', handleFirstInteraction);
-  window.addEventListener('wheel', stopAutoScroll, { passive: true });
-  window.addEventListener('touchmove', stopAutoScroll, { passive: true });
 });
 
 onBeforeUnmount(() => {
   window.clearInterval(timer);
-  stopAutoScroll();
   audio.value?.pause();
-  document.removeEventListener('pointerdown', handleFirstInteraction);
-  document.removeEventListener('keydown', handleFirstInteraction);
-  window.removeEventListener('wheel', stopAutoScroll);
-  window.removeEventListener('touchmove', stopAutoScroll);
 });
 </script>
 
 <template>
-  <a class="skip-link" href="#wedding-details">跳到婚礼时间与地点</a>
+  <OpeningEntrance v-if="!hasOpened" @opening="beginInvitation" @opened="finishEntrance" />
+  <FloatingCherryBlossoms v-if="hasOpened" />
+  <a v-if="hasOpened" class="skip-link" href="#wedding-details">跳到婚礼时间与地点</a>
 
-  <Transition name="music-gate">
-    <div v-if="showMusicUnlock" class="music-unlock" role="dialog" aria-modal="true" aria-label="开启婚礼邀请">
-      <button type="button" @click="unlockExperience"><span aria-hidden="true">囍</span><strong>开启婚礼邀请</strong><small>轻触播放音乐</small></button>
-    </div>
-  </Transition>
-
-  <main id="top">
+  <main id="top" tabindex="-1" :inert="!hasOpened" :aria-hidden="!hasOpened">
     <section class="hero" aria-labelledby="hero-title">
       <header class="just-married">
         <KittyAccent class="hero-bow hero-bow-left" variant="bow" />
@@ -249,7 +193,7 @@ onBeforeUnmount(() => {
           </svg>
         </button>
         <PhotoSlot :src="imageSlots.musicCover.src" :label="imageSlots.musicCover.label" :alt="imageSlots.musicCover.alt" ratio="1 / 1" />
-        <audio ref="audio" :src="music.src" preload="auto" autoplay loop playsinline @canplay="audioReady = true; syncAudioProgress()" @loadedmetadata="syncAudioProgress" @durationchange="syncAudioProgress" @timeupdate="syncAudioProgress" @error="audioReady = false" @play="isPlaying = true" @pause="isPlaying = false" @ended="isPlaying = false; syncAudioProgress()" />
+        <audio ref="audio" :src="music.src" preload="auto" loop playsinline @canplay="audioReady = true; syncAudioProgress()" @loadedmetadata="syncAudioProgress" @durationchange="syncAudioProgress" @timeupdate="syncAudioProgress" @error="audioReady = false" @play="isPlaying = true" @pause="isPlaying = false" @ended="isPlaying = false; syncAudioProgress()" />
       </div>
       <div class="hero-opening">
         <p>嗨～当你看到这封邀请的时候</p>
@@ -291,7 +235,7 @@ onBeforeUnmount(() => {
         <PhotoSlot :src="imageSlots.focus.src" :label="imageSlots.focus.label" :alt="imageSlots.focus.alt" ratio="4 / 5" previewable reveal reveal-direction="focus" @preview="openPreview(3)" />
         <div><span>OUR STORY</span><h3>敬我们，<br />也敬余生。</h3><p>有些欢喜，想当面说。<br />有些时刻，想与你一起。</p></div>
       </div>
-      <div class="story-notes" aria-label="我们的故事章节"><article v-for="photo in photographs" :key="photo.index"><span>{{ photo.index }}</span><h3>{{ photo.label }}</h3><p>{{ photo.caption.replace('\n', '') }}</p></article></div>
+      <StoryJourney />
       <div class="story-wide">
         <PhotoSlot :src="imageSlots.wide.src" :label="imageSlots.wide.label" :alt="imageSlots.wide.alt" ratio="16 / 9" previewable reveal reveal-direction="left" @preview="openPreview(4)" />
         <PhotoSlot :src="imageSlots.close.src" :label="imageSlots.close.label" :alt="imageSlots.close.alt" ratio="16 / 9" previewable reveal reveal-direction="right" :reveal-delay="120" @preview="openPreview(5)" />

@@ -51,10 +51,6 @@ html {
   background: #fff;
 }
 
-html.auto-scrolling {
-  scroll-behavior: auto;
-}
-
 body {
   margin: 0;
   color: var(--ink);
@@ -2096,72 +2092,6 @@ a:focus-visible,
     width: 64px;
   }
 }
-/* Browser autoplay fallback: one clear tap unlocks music and scrolling. */
-.music-unlock {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: rgb(255 255 255 / 92%);
-  backdrop-filter: blur(10px);
-  touch-action: none;
-}
-
-.music-unlock button {
-  min-width: 210px;
-  padding: 30px 34px;
-  display: grid;
-  justify-items: center;
-  gap: 9px;
-  border: 1px solid rgb(167 47 60 / 16%);
-  border-radius: 28px;
-  background: linear-gradient(145deg, #fff, #fff4f6);
-  color: var(--ink);
-  box-shadow: 0 18px 50px rgb(93 42 55 / 14%);
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-.music-unlock button>span {
-  color: var(--red);
-  font-family: 'Letter Hand', 'Kaiti SC', KaiTi, cursive;
-  font-size: 74px;
-  font-weight: 700;
-  line-height: .9;
-  text-shadow: 5px 5px 0 var(--pink);
-}
-
-.music-unlock button>strong {
-  margin-top: 8px;
-  font-size: 18px;
-  letter-spacing: .08em;
-}
-
-.music-unlock button>small {
-  color: #9d8f93;
-  font-size: 12px;
-  letter-spacing: .12em;
-}
-
-.music-gate-enter-active,
-.music-gate-leave-active {
-  transition: opacity .3s ease;
-}
-
-.music-gate-enter-from,
-.music-gate-leave-to {
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .music-gate-enter-active,
-  .music-gate-leave-active {
-    transition: none;
-  }
-}
-
 /* Hello Kitty accents — intentionally sparse so the wedding remains the focus. */
 .kitty-accent {
   display: block;

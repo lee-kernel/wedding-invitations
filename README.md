@@ -9,8 +9,8 @@
 - 响应式婚礼首屏、照片故事、时间地点和 RSVP 表单
 - 婚礼倒计时与爱心日期标记
 - 背景音乐、旋转唱片封面、动态音频条和可拖动进度条
-- 自动播放失败时提供一次点击开启音乐的兼容入口
-- 页面匀速自动滚动，用户手动滑动后自动停止
+- 奶白浅粉蝴蝶结请柬封面，点击印章播放花瓣并进入正文，同时尝试启动音乐
+- 全屏粉色花瓣飘落效果，页面由用户手动滚动；减少动态效果时停用花瓣动画
 - 婚纱照、小朋友头像、音乐封面和场地图片均可直接替换
 - 婚纱照支持点击全屏预览，手机端支持双指缩放与放大后拖动
 - 婚纱照进入视口时以显影、上浮和交错动效出现，并兼容减少动态效果设置
@@ -103,7 +103,7 @@ public/audio/wedding-song.mp3
 
 歌曲名称和演唱者在 `src/data/wedding.ts` 的 `music` 对象中修改。
 
-桌面浏览器允许时会直接自动播放；手机浏览器拦截有声自动播放时，页面会显示一次性开启按钮。点击后音乐和自动滚动会同步启动。
+每次打开页面先展示请柬封面，点击印章或“直接进入请柬”时尝试播放音乐。点击印章后上下遮幕立即展开，约 0.9 秒完成；正文预先渲染在遮幕后，幕布动画结束即进入正文，直接进入或系统减少动态效果时跳过动画；播放失败仍可进入正文并使用音乐按钮重试。页面由用户手动滚动。
 
 ## 自定义字体
 
@@ -151,3 +151,13 @@ src/
 ## 开源协议
 
 wedding-invitations 基于 [MIT 许可证](LICENSE) 开源。第三方依赖、社区样例与素材遵循各自的许可声明。
+
+### 花瓣动画来源
+
+`src/components/FloatingCherryBlossoms.vue` 改编自 [royal-wedding-invitation 的 FloatingCherryBlossoms.tsx](https://github.com/MrDevashish-777/royal-wedding-invitation/blob/main/src/components/FloatingCherryBlossoms.tsx)，保留 Canvas 花瓣绘制与运动方式，适配 Vue 生命周期，并补充时间步长、高分屏和减少动态效果支持。
+
+开场组件 `src/components/OpeningEntrance.vue` 参考同一项目的 `OpeningEntrance.tsx`，适配为中文姓名、婚期与 Vue 生命周期；装饰背景采用 CSS 绘制，复用正文蝴蝶结与 Canvas 花瓣组件，印章带有轻柔悬浮和呼吸光晕，点击时从印章中心抛撒 70 片花瓣，随后受重力下落。
+
+### 故事旅程
+
+四段故事使用 `StoryJourney.vue` 展示，参考 [wedding-website 的 JourneyTrail](https://github.com/deepeshmi26/wedding-website/blob/main/src/app/JourneyTrail.tsx) 的长滚动区域与 sticky 舞台方式，使用 SVG 路径长度控制粉色婚车的位置、转向和路线进度。支持鼠标、触屏和键盘原生滚动，倒滚可回看；路线结束后恢复普通浏览。系统减少动态效果时显示静态故事列表。婚车为本项目绘制的 SVG，不依赖外部图片或动画库。
