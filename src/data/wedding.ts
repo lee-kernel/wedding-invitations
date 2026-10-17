@@ -11,7 +11,7 @@ export const wedding = {
   welcome: '17:28',
   ceremony: '17:58',
   // 填入腾讯问卷的完整 HTTPS 链接后，RSVP 按钮即可跳转。
-  rsvpUrl: '',
+  rsvpUrl: 'https://wj.qq.com/s2/27795794/u9dj/',
 };
 
 const invitationImage = (file: string) => `${import.meta.env.BASE_URL}images/invitation/${file}`;

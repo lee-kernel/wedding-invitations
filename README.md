@@ -172,4 +172,12 @@ wedding-invitations 基于 [MIT 许可证](LICENSE) 开源。第三方依赖、�
 
 ### RSVP 赴约回执
 
-日期配图已替换为浅粉信笺式 `RsvpCard.vue`，左侧日历保留。参考 wedding-website 的 RsvpSection，使用本项目配色与 CSS 邮戳。配置 `src/data/wedding.ts` 中的 `wedding.rsvpUrl` 为腾讯问卷完整 HTTPS 链接即可启用跳转；未配置时按钮禁用并显示“赴约回执即将开放”。问卷在新标签页打开。
+赴约回执使用浅粉信笺式 `RsvpCard.vue`，位于婚礼地址卡片下方；日历独立居中展示。参考 wedding-website 的 RsvpSection，使用本项目配色与 CSS 邮戳。配置 `src/data/wedding.ts` 中的 `wedding.rsvpUrl` 为腾讯问卷完整 HTTPS 链接即可启用跳转；未配置时按钮禁用并显示“赴约回执即将开放”。问卷在新标签页打开。
+
+音乐通过首屏播放器的标准播放／暂停按钮控制。首屏完全滚出视窗后，右下角显示无文字提示的悬浮音乐按钮，返回首屏隐藏；两处控制共用同一音频与播放进度。
+
+### 微信保存高清邀请卡
+
+保存弹窗优先展示真实 PNG 地址 `public/images/invitation/invitation-card.png`（1080 × 2160），避免微信对 Blob 预览图的保存差异；加载失败时回退至动态生成。修改婚礼信息、照片或邀请卡排版后，需要运行 `node scripts/export-invitation.mjs` 重新导出再构建。脚本需要 Playwright 和 Microsoft Edge；可用 `PLAYWRIGHT_MODULE` 指向已安装的 Playwright 模块。脚本默认自行启动临时 Vite 服务，也支持通过 `INVITATION_DEV_URL` 使用已有开发服务。
+
+双人 Kitty 装饰素材：`public/images/invitation/kitty-wedding-couple.png`。使用内置 imagegen 编辑用户参考图；提示词：提取婚纱新娘与礼服新郎，保留像素画造型、配色和姿态，去除粉色底与花纹，输出透明背景，不添加文字或物体。

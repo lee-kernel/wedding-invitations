@@ -10,6 +10,7 @@ const ready = ref(false), open = ref(false), file = ref<File | null>(null), url 
 const device = ref<Device>('desktop');
 const generating = ref(false);
 const generationFailed = ref(false);
+const originalImageUrl = `${import.meta.env.BASE_URL}images/invitation/invitation-card.png`;
 const trigger = ref<HTMLButtonElement | null>(null);
 function currentDevice(): Device { if (/MicroMessenger/i.test(navigator.userAgent)) return 'wechat'; if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios'; if (/Android/i.test(navigator.userAgent)) return 'android'; return 'desktop'; }
 const hint = computed(() => device.value === 'ios' ? '长按图片保存，或在系统菜单中选择“存储图像”。' : device.value === 'android' || device.value === 'wechat' ? '长按图片，选择“保存图片”；也可以直接下载。' : '下载这张邀请，把相聚的时间和地点留在手边。');
@@ -19,8 +20,17 @@ async function prepareImage() {
   generationFailed.value = false;
   feedback.value = '';
   try {
-    const image = await createInvitationImage();
-    url.value = URL.createObjectURL(image);
+    let image: File;
+    try {
+      const response = await fetch(originalImageUrl);
+      if (!response.ok || !response.headers.get('content-type')?.includes('image/png')) throw new Error('Original PNG unavailable');
+      image = new File([await response.blob()], invitationImageName, { type: 'image/png' });
+      // A real HTTP image URL lets WeChat fetch the original instead of a blob preview.
+      url.value = originalImageUrl;
+    } catch {
+      image = await createInvitationImage();
+      url.value = URL.createObjectURL(image);
+    }
     file.value = image;
     canShare.value = device.value !== 'desktop' && device.value !== 'wechat' && !!navigator.share && !!navigator.canShare?.({ files: [image] });
   } catch {
@@ -32,7 +42,7 @@ watch(open, (isOpen) => { if (isOpen) void prepareImage(); });
 async function shareImage() { if (!file.value || sharing.value) return; sharing.value = true; feedback.value = ''; try { await navigator.share({ files: [file.value] }); } catch (error) { if (!(error instanceof Error && error.name === 'AbortError')) feedback.value = '也可以长按图片保存，或使用下方“下载图片”。'; } finally { sharing.value = false; } }
 function show() { device.value = currentDevice(); feedback.value = ''; open.value = true; }
 onMounted(() => { ready.value = true; });
-onBeforeUnmount(() => { if (url.value) URL.revokeObjectURL(url.value); });
+onBeforeUnmount(() => { if (url.value.startsWith('blob:')) URL.revokeObjectURL(url.value); });
 </script>
 
 <template>

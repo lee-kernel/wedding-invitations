@@ -552,7 +552,7 @@ a:focus-visible,
 }
 
 .details {
-  padding-bottom: 130px;
+  padding-bottom: 48px;
 }
 
 .details-heading {
@@ -1141,7 +1141,7 @@ a:focus-visible,
   }
 
   .details {
-    padding-bottom: 85px;
+    padding-bottom: 28px;
   }
 
   .details-heading {
@@ -2259,7 +2259,7 @@ a:focus-visible,
 
 .kitty-farewell {
   position: relative;
-  padding: clamp(42px, 5vw, 62px) 24px clamp(82px, 10vw, 120px);
+  padding: 22px 24px clamp(58px, 7vw, 86px);
   display: grid;
   place-items: center;
   align-content: center;
@@ -2274,7 +2274,7 @@ a:focus-visible,
 .kitty-farewell-art {
   position: relative;
   width: min(330px, 76vw);
-  min-height: 390px;
+  min-height: 350px;
   display: grid;
   place-items: end center;
 }
@@ -2515,11 +2515,11 @@ a:focus-visible,
   }
 
   .kitty-farewell {
-    padding: 30px 18px 78px;
+    padding: 16px 18px 56px;
   }
 
   .kitty-farewell-art {
-    min-height: 330px;
+    min-height: 290px;
   }
 
   .kitty-farewell-art > img {
@@ -2642,3 +2642,35 @@ a:focus-visible,
   .cover-decoration-left { top: 24%; left: -45px; }
   .cover-decoration-right { right: -42px; bottom: 12%; }
 }
+
+.music-playback-icon { display: block; width: 21px; height: 21px; fill: currentColor; }
+
+.date-layout.date-layout-calendar { grid-template-columns: minmax(0, 1fr); width: min(100%, 760px); margin-inline: auto; }
+.details-rsvp { width: min(100%, 760px); margin: clamp(48px, 7vw, 80px) auto 0; }
+
+.gift-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+  color: #b36580;
+  font: 13px/1.7 var(--sans);
+  letter-spacing: .06em;
+}
+.gift-hint > span { width: 22px; height: 1px; background: #e5bdcc; }
+.gift-hint + p { margin-top: 24px; }
+@media (max-width: 700px) { .gift-hint { margin-top: 20px; font-size: 12px; }.gift-hint + p { margin-top: 22px; } }
+
+.kitty-farewell > p { font-size: clamp(23px, 4.2vw, 36px); line-height: 1.6; }
+.kitty-farewell > span[lang='en'] { margin-top: 10px; font: 12px/1.7 Georgia, serif; letter-spacing: .025em; color: #ae8b98; }
+
+.transition-happiness { padding: 28px 20px 18px; }
+
+/* Wedding couple, double happiness and booklets form one centered vignette. */
+.transition-happiness { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; row-gap: 0; justify-items: center; padding-top: 26px; }
+.wedding-kitty-couple { width: clamp(250px, 64vw, 370px); margin-top: 20px; }
+.wedding-kitty-couple > img { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.transition-happiness > span { margin-top: 12px; align-self: center; font-size: 32px; }
+.transition-happiness > i { align-self: center; margin-top: 9px; }
+.couple-keepsake-caption { margin: 16px 0 0; color: #b57e91; font: 12px/1.7 var(--sans); letter-spacing: .14em; }
