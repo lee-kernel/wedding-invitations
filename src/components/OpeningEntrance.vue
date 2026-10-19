@@ -2,7 +2,7 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import KittyAccent from '@/components/KittyAccent.vue';
 import FloatingCherryBlossoms from '@/components/FloatingCherryBlossoms.vue';
-import { wedding } from '@/data/wedding';
+import { wedding, copy } from '@/data/wedding';
 
 // Adapted from royal-wedding-invitation/src/components/OpeningEntrance.tsx.
 const emit = defineEmits<{ opening: []; opened: [] }>();
@@ -69,11 +69,11 @@ onBeforeUnmount(() => {
     <div class="entrance-flap entrance-flap-bottom" aria-hidden="true" />
     <div class="entrance-card">
       <KittyAccent class="entrance-bow" variant="bow" />
-      <header class="entrance-heading"><span aria-hidden="true">囍</span><p>一封写给你的幸福邀请</p><i /></header>
+      <header class="entrance-heading"><span aria-hidden="true">囍</span><p>{{ copy.openingHeading }}</p><i /></header>
       <p class="entrance-eyebrow">A LETTER OF LOVE</p>
       <h1 id="entrance-title"><span>{{ wedding.groom }}</span><em>&amp;</em><span>{{ wedding.bride }}</span></h1>
       <p class="entrance-date">{{ wedding.dateLong }} · {{ wedding.day }}</p>
-      <p class="entrance-message">一封请柬，一份欢喜，静候你的到来。</p>
+      <p class="entrance-message">{{ copy.openingMessage }}</p>
       <button ref="seal" class="entrance-seal" type="button" :aria-disabled="opening" aria-label="开启婚礼请柬并播放音乐" @click="open()"><span class="seal-ripple seal-ripple-first" aria-hidden="true" /><span class="seal-ripple seal-ripple-second" aria-hidden="true" /><strong>开启<br />请柬</strong></button>
       <p class="entrance-hint">轻触印章 · 花瓣为你而落</p>
       <button class="entrance-direct" type="button" :aria-disabled="opening" @click="open(true)">直接进入请柬</button>

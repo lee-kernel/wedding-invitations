@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { wedding } from '@/data/wedding';
+import { wedding, copy } from '@/data/wedding';
 
 // Leave empty until the Tencent questionnaire is ready.
 const questionnaireUrl = (() => {
@@ -14,13 +14,13 @@ const questionnaireUrl = (() => {
   <article class="rsvp-card" aria-labelledby="rsvp-title">
     <div class="rsvp-content">
       <p class="rsvp-eyebrow">A LITTLE NOTE FOR YOU</p>
-      <h3 id="rsvp-title">为我们的婚礼，<br />留一份你的期待。</h3>
-      <p class="rsvp-copy">想把这一天的欢喜，与你一起分享。<br />告诉我们你的赴约计划，<br />让我们为你留好位置。</p>
+      <h3 id="rsvp-title">{{ copy.rsvpTitle[0] }}<br />{{ copy.rsvpTitle[1] }}</h3>
+      <p class="rsvp-copy">{{ copy.rsvpBody[0] }}<br />{{ copy.rsvpBody[1] }}<br />{{ copy.rsvpBody[2] }}</p>
       <p class="rsvp-names">{{ wedding.groom }} <span>&amp;</span> {{ wedding.bride }}</p>
       <a v-if="questionnaireUrl" class="rsvp-button" :href="questionnaireUrl" target="_blank" rel="noopener noreferrer" aria-label="填写婚礼出席回执，打开问卷"><svg viewBox="0 0 24 18" aria-hidden="true"><path d="M3 9h18m-6-6 6 6-6 6" /></svg><span>填写赴约回执</span></a>
       <button v-else class="rsvp-button" type="button" disabled aria-describedby="rsvp-pending"><svg viewBox="0 0 24 18" aria-hidden="true"><path d="M3 9h18m-6-6 6 6-6 6" /></svg><span>赴约回执 · 即将开放</span></button>
       <p class="rsvp-pending" :id="!questionnaireUrl ? 'rsvp-pending' : undefined">{{ questionnaireUrl ? '点击填写，让我们为你留好位置' : '问卷准备中，开放后可在这里填写' }}</p>
-      <footer class="rsvp-footer"><div><span>期待与你相见</span><p>{{ wedding.dateLong }}</p><small>{{ wedding.venue }} · {{ wedding.room }}</small></div><div class="rsvp-stamp" aria-hidden="true"><span>WITH LOVE</span><strong>囍</strong><span>2027 · 01 · 31</span></div></footer>
+      <footer class="rsvp-footer"><div><span>期待与你相见</span><p>{{ wedding.dateLong }}</p><small>{{ wedding.venue }} · {{ wedding.room }}</small></div><div class="rsvp-stamp" aria-hidden="true"><span>WITH LOVE</span><strong>囍</strong><span>{{ wedding.stampDate }}</span></div></footer>
     </div>
   </article>
 </template>

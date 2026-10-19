@@ -78,7 +78,7 @@ src/data/wedding.ts
 | 文件名 | 页面位置 | 推荐比例 |
 | --- | --- | --- |
 | hero.webp | 首屏创意主视觉 | 1:1 |
-| share-cover.png | 微信／社交平台分享封面 | 1200:630 |
+| share-cover.png | 微信／社交平台分享封面 | 1:1（1254 × 1254） |
 | `child-left.webp` | 左侧小朋友头像／新郎 | 1:1 |
 | `child-right.webp` | 右侧小朋友头像／新娘 | 1:1 |
 | `music-cover.webp` | 音乐唱片封面 | 1:1 |
@@ -144,14 +144,6 @@ src/
   App.vue                   主页面
 ```
 
-## 社区交流
-
-欢迎到 [LinuxDO](https://linux.do/) 社区交流 AI 工具与提示词使用心得。
-
-## 开源协议
-
-wedding-invitations 基于 [MIT 许可证](LICENSE) 开源。第三方依赖、社区样例与素材遵循各自的许可声明。
-
 ### 花瓣动画来源
 
 `src/components/FloatingCherryBlossoms.vue` 改编自 [royal-wedding-invitation 的 FloatingCherryBlossoms.tsx](https://github.com/MrDevashish-777/royal-wedding-invitation/blob/main/src/components/FloatingCherryBlossoms.tsx)，保留 Canvas 花瓣绘制与运动方式，适配 Vue 生命周期，并补充时间步长、高分屏和减少动态效果支持。
@@ -178,6 +170,27 @@ wedding-invitations 基于 [MIT 许可证](LICENSE) 开源。第三方依赖、�
 
 ### 微信保存高清邀请卡
 
-保存弹窗优先展示真实 PNG 地址 `public/images/invitation/invitation-card.png`（1080 × 2160），避免微信对 Blob 预览图的保存差异；加载失败时回退至动态生成。修改婚礼信息、照片或邀请卡排版后，需要运行 `node scripts/export-invitation.mjs` 重新导出再构建。脚本需要 Playwright 和 Microsoft Edge；可用 `PLAYWRIGHT_MODULE` 指向已安装的 Playwright 模块。脚本默认自行启动临时 Vite 服务，也支持通过 `INVITATION_DEV_URL` 使用已有开发服务。
+保存弹窗默认根据统一配置动态生成邀请图（1080 × 2160）。需要使用预制 PNG 时，在 `invitation.invitationImage` 中填写相对 `public/` 的图片路径；预制图加载失败时回退至动态生成。预制图中的文字需在修改婚礼信息后单独同步。
 
 双人 Kitty 装饰素材：`public/images/invitation/kitty-wedding-couple.png`。使用内置 imagegen 编辑用户参考图；提示词：提取婚纱新娘与礼服新郎，保留像素画造型、配色和姿态，去除粉色底与花纹，输出透明背景，不添加文字或物体。
+
+## 统一修改婚礼信息
+
+日常调整请编辑 `src/data/invitation-config.ts`：
+
+- `invitation`：新郎、新娘、公历日期、农历、时区、迎宾和仪式时间、地点、厅号、地图城市/区县、回执链接。
+- `copy`：开场、欢迎、故事、回执、页脚等主要文案。数组中的每一项对应一行，请保留现有行数。
+- 公历日期只修改 `date`（`YYYY-MM-DD`）；显示日期、星期、日历天数/空位/选中日、印章日期和倒计时自动生成。农历 `lunar` 需手动核对；倒计时以 `ceremony` 和 `utcOffset` 为准。
+- 姓名同步到各页面、图片说明、照片故事、下载文件名及分享标题。地点同步到地图查询和邀请信息。
+- 相册文案、模拟聊天、照片故事、音乐和图片路径继续集中在 `src/data/wedding.ts`。
+- 默认保存图片根据配置实时生成。若设置 `invitationImage`，请填写相对 `public/` 的路径，如 `images/invitation/invitation-card.png`；成品图片内的文字需要手动更新。
+
+修改后执行 `npm run build` 和 `npm run lint`。页面标题和分享描述在开发服务启动/生产构建时读取配置；修改配置后请重启开发服务或重新构建发布。`public/images/invitation/share-cover.png` 及其他图片中已有的文字不会随配置改变，需单独更新图片。新增中文文案后运行 `node scripts/subset-font.mjs` 重新生成字体子集（需网络及带 fonttools、brotli 的 Python，可用 `FONT_PYTHON` 指定解释器）。
+
+## 社区交流
+
+欢迎到 [LinuxDO](https://linux.do/) 社区交流 AI 工具与提示词使用心得。
+
+## 开源协议
+
+wedding-invitations 基于 [MIT 许可证](LICENSE) 开源。第三方依赖、社区样例与素材遵循各自的许可声明。

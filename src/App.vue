@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import { emojiBlast } from 'emoji-blast';
-import { imageSlots, music, wedding } from '@/data/wedding';
+import { imageSlots, music, wedding, copy } from '@/data/wedding';
 import PhotoSlot from '@/components/PhotoSlot.vue';
 import PhotoLightbox from '@/components/PhotoLightbox.vue';
 import MapDirections from '@/components/MapDirections.vue';
@@ -17,7 +17,7 @@ import FloatingMusicControl from '@/components/FloatingMusicControl.vue';
 
 const baseUrl = import.meta.env.BASE_URL;
 const now = ref(Date.now());
-const eventTime = new Date('2027-01-31T17:58:00+08:00').getTime();
+const eventTime = wedding.eventTime;
 const kittyScene = `${import.meta.env.BASE_URL}images/invitation/hello-kitty-scene.svg`;
 let timer = 0;
 const countdown = computed(() => {
@@ -29,7 +29,7 @@ const countdown = computed(() => {
     { value: String(Math.floor((remaining / 1_000) % 60)).padStart(2, '0'), label: '秒' },
   ];
 });
-const calendarDays = Array.from({ length: 31 }, (_, index) => index + 1);
+const calendarDays = wedding.calendarDays;
 const audio = ref<HTMLAudioElement | null>(null);
 const audioReady = ref(false);
 const isPlaying = ref(false);
@@ -176,9 +176,9 @@ onBeforeUnmount(() => {
         <h1 id="hero-title">
           <svg class="title-arc" viewBox="0 0 500 100" aria-hidden="true" focusable="false">
             <defs><path id="title-arc-path" d="M 48 84 Q 250 -14 452 84" /></defs>
-            <text><textPath href="#title-arc-path" startOffset="50%" text-anchor="middle">WE ARE GETTING MARRIED</textPath></text>
+            <text><textPath href="#title-arc-path" startOffset="50%" text-anchor="middle">{{ copy.titleEnglish }}</textPath></text>
           </svg>
-          <strong>我们结婚啦！</strong>
+          <strong>{{ copy.title }}</strong>
         </h1>
         <div class="kids-and-happiness">
           <div class="child-role">
@@ -214,9 +214,7 @@ onBeforeUnmount(() => {
         <audio ref="audio" :src="music.src" preload="auto" loop playsinline @canplay="audioReady = true; syncAudioProgress()" @loadedmetadata="syncAudioProgress" @durationchange="syncAudioProgress" @timeupdate="syncAudioProgress" @error="audioReady = false" @play="isPlaying = true" @pause="isPlaying = false" @ended="isPlaying = false; syncAudioProgress()" />
       </div>
       <div class="hero-opening">
-        <p>嗨～当你看到这封邀请的时候</p>
-        <p>我们的婚礼</p>
-        <p>已经进入倒计时啦～</p>
+        <p v-for="line in copy.heroLines" :key="line">{{ line }}</p>
       </div>
       <div class="countdown" aria-label="距离婚礼的倒计时"><div v-for="item in countdown" :key="item.label"><strong>{{ item.value }}</strong><span>{{ item.label }}</span></div></div>
     </section>
@@ -227,55 +225,55 @@ onBeforeUnmount(() => {
       <span>「囍」</span>
       <i aria-hidden="true">HELLO, LOVE</i>
       <div class="wedding-kitty-couple"><img :src="`${baseUrl}images/invitation/kitty-wedding-certificates.png`" alt="新娘 Kitty 手捧花束，与新郎 Kitty 各持一本红色结婚证" loading="lazy" draggable="false" /></div>
-      <p class="couple-keepsake-caption">往后余生，持证同行。</p>
+      <p class="couple-keepsake-caption">{{ copy.keepsake }}</p>
     </div>
     </ScrollSpotlights>
 
     <section id="welcome" class="welcome section-shell">
       <p class="section-mark">WELCOME TO OUR WEDDING</p>
-      <h2>嘿，当你看到这封邀请，<br />我们的婚礼已经进入倒计时。</h2>
-      <p>很开心我们出现在彼此的生命中，<br />也很开心能把这份喜悦，认真地分享给你。</p>
+      <h2>{{ copy.welcomeTitle[0] }}<br />{{ copy.welcomeTitle[1] }}</h2>
+      <p>{{ copy.welcomeBody[0] }}<br />{{ copy.welcomeBody[1] }}</p>
       <div class="kitty-photo-frame">
         <PhotoSlot :src="imageSlots.portrait.src" :label="imageSlots.portrait.label" :alt="imageSlots.portrait.alt" ratio="4 / 5" previewable reveal reveal-direction="up" @preview="openPreview(0)" />
         <KittyAccent variant="bow" />
       </div>
-      <p class="names-line">张子乔 <i>&amp;</i> 陈美嘉</p>
+      <p class="names-line">{{ wedding.groom }} <i>&amp;</i> {{ wedding.bride }}</p>
     </section>
 
     <section id="story" class="story section-shell" aria-labelledby="story-title">
       <div class="story-heading">
         <p class="section-mark">CHEERS TO US</p>
-        <h2 id="story-title">我们有的是以后，<br /><em>以后都是我们。</em></h2>
-        <p>世界这么大，两个人相识相爱的概率很小。<br />所以我们想把相处的日常，慢慢写进往后的每一天。</p>
+        <h2 id="story-title">{{ copy.storyTitle[0] }}<br /><em>{{ copy.storyTitle[1] }}</em></h2>
+        <p>{{ copy.storyBody[0] }}<br />{{ copy.storyBody[1] }}</p>
       </div>
       <div class="story-pair">
         <PhotoSlot :src="imageSlots.storyLeft.src" :label="imageSlots.storyLeft.label" :alt="imageSlots.storyLeft.alt" ratio="3 / 4" previewable reveal reveal-direction="left" @preview="openPreview(1)" />
         <PhotoSlot :src="imageSlots.storyRight.src" :label="imageSlots.storyRight.label" :alt="imageSlots.storyRight.alt" ratio="3 / 4" previewable reveal reveal-direction="right" :reveal-delay="140" @preview="openPreview(2)" />
       </div>
-      <blockquote><p>“不是所有浪漫都要盛大。<br />和你一起的普通日子，本身就足够珍贵。”</p><span>THANK YOU FOR BEING PART OF OUR STORY.</span></blockquote>
+      <blockquote><p>{{ copy.storyQuote[0] }}<br />{{ copy.storyQuote[1] }}</p><span>THANK YOU FOR BEING PART OF OUR STORY.</span></blockquote>
       <div class="story-focus">
         <PhotoSlot :src="imageSlots.focus.src" :label="imageSlots.focus.label" :alt="imageSlots.focus.alt" ratio="4 / 5" previewable reveal reveal-direction="focus" @preview="openPreview(3)" />
-        <div><span>OUR STORY</span><h3>敬我们，<br />也敬余生。</h3><p>有些欢喜，想当面说。<br />有些时刻，想与你一起。</p></div>
+        <div><span>OUR STORY</span><h3>{{ copy.storyFocusTitle[0] }}<br />{{ copy.storyFocusTitle[1] }}</h3><p>{{ copy.storyFocusBody[0] }}<br />{{ copy.storyFocusBody[1] }}</p></div>
       </div>
       <StoryJourney />
       <StoryAlbum @preview="openPreview" />
     </section>
 
     <section id="wedding-details" class="details section-shell" aria-labelledby="details-title">
-      <div class="details-heading"><p class="section-mark">WEDDING TIME</p><h2 id="details-title">良辰已定，<br /><em>静候卿来。</em></h2></div>
+      <div class="details-heading"><p class="section-mark">WEDDING TIME</p><h2 id="details-title">{{ copy.detailsTitle[0] }}<br /><em>{{ copy.detailsTitle[1] }}</em></h2></div>
       <div class="date-layout date-layout-calendar">
         <div class="calendar-card">
           <KittyAccent class="calendar-kitty" variant="face" />
-          <div class="calendar-title"><strong>01 <small>/ 31</small></strong><span>— 2027 —</span></div>
+          <div class="calendar-title"><strong>{{ wedding.month }} <small>/ {{ wedding.dayPadded }}</small></strong><span>— {{ wedding.year }} —</span></div>
           <div class="weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
-          <div class="calendar-grid"><span v-for="blank in 4" :key="`blank-${blank}`" aria-hidden="true" /><span v-for="day in calendarDays" :key="day" :class="{ chosen: day === 31 }" :aria-current="day === 31 ? 'date' : undefined">{{ day }}</span></div>
+          <div class="calendar-grid"><span v-for="blank in wedding.calendarOffset" :key="`blank-${blank}`" aria-hidden="true" /><span v-for="day in calendarDays" :key="day" :class="{ chosen: day === wedding.dayOfMonth }" :aria-current="day === wedding.dayOfMonth ? 'date' : undefined">{{ day }}</span></div>
           <p>{{ wedding.dateLong }} · {{ wedding.day }}<br />{{ wedding.lunar }}</p>
         </div>
       </div>
       <div class="venue-card">
         <div class="venue-copy">
           <p class="section-mark">WEDDING ADDRESS</p><h3>{{ wedding.venue }}</h3><strong>{{ wedding.room }}</strong>
-          <dl><div><dt>{{ wedding.welcome }}</dt><dd>到场相聚</dd></div><div><dt>{{ wedding.ceremony }}</dt><dd>仪式开始</dd></div></dl>
+          <dl><div><dt>{{ wedding.welcome }}</dt><dd>{{ copy.welcomeLabel }}</dd></div><div><dt>{{ wedding.ceremony }}</dt><dd>{{ copy.ceremonyLabel }}</dd></div></dl>
           <div class="actions"><SaveInvitationImage /><MapDirections /></div>
         </div>
         <PhotoSlot :src="imageSlots.venue.src" :label="imageSlots.venue.label" :alt="imageSlots.venue.alt" ratio="5 / 3" />
@@ -291,11 +289,11 @@ onBeforeUnmount(() => {
         <KittyAccent variant="bow" />
       </div>
       <div id="gift-hint" class="gift-hint"><span aria-hidden="true" />点击礼物盒，为新人送祝福<span aria-hidden="true" /></div>
-      <p>谢谢你，来见证我们的幸福。</p>
+      <p>{{ copy.farewell }}</p>
       <span lang="en">Thank you for being part of our story.</span>
     </section>
 
-    <footer class="footer"><p>有你在，才是圆满。</p><strong>张子乔 <i>&amp;</i> 陈美嘉</strong><span>2027.01.31 · 不见不散</span><small>WITH LOVE &amp; A LITTLE BOW</small></footer>
+    <footer class="footer"><p>{{ copy.footer }}</p><strong>{{ wedding.groom }} <i>&amp;</i> {{ wedding.bride }}</strong><span>{{ wedding.date }} · {{ copy.footerDate }}</span><small>WITH LOVE &amp; A LITTLE BOW</small></footer>
   </main>
   <FloatingMusicControl :visible="hasOpened && heroPastViewport" :playing="isPlaying" :ready="audioReady" @toggle="toggleMusic" />
   <PhotoLightbox v-model="previewIndex" :photos="previewPhotos" />

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { chatProfiles, wedding } from '@/data/wedding';
+import { chatProfiles, wedding, copy } from '@/data/wedding';
 
 defineProps<{ messages: { from: string; text: string }[] }>();
 const avatarFailed = ref<Record<string, boolean>>({});
@@ -9,7 +9,7 @@ const avatarFailed = ref<Record<string, boolean>>({});
 <template>
   <div class="wechat" role="group" aria-label="关于选照片的模拟微信聊天">
     <div class="phone-status" aria-hidden="true">
-      <span>17:20</span>
+      <span>{{ copy.chatClock }}</span>
       <div class="phone-indicators">
         <svg viewBox="0 0 24 18" class="signal"><rect x="1" y="12" width="4" height="5" rx="1" /><rect x="7" y="8" width="4" height="9" rx="1" /><rect x="13" y="4" width="4" height="13" rx="1" /><rect x="19" width="4" height="17" rx="1" /></svg>
         <svg viewBox="0 0 24 18" class="wifi"><path d="M1 4.8a17.2 17.2 0 0 1 22 0l-2.5 2.8a13.4 13.4 0 0 0-17 0ZM5.2 9.4a10.7 10.7 0 0 1 13.6 0l-2.6 2.8a6.7 6.7 0 0 0-8.4 0ZM9.4 14a4 4 0 0 1 5.2 0L12 17Z" /></svg>
@@ -18,7 +18,7 @@ const avatarFailed = ref<Record<string, boolean>>({});
     </div>
     <header class="wechat-header"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 3-9 9 9 9" /></svg><strong>{{ wedding.bride }}</strong><svg class="wechat-more" aria-hidden="true" focusable="false" viewBox="0 0 28 24"><circle cx="5" cy="12" r="2" /><circle cx="14" cy="12" r="2" /><circle cx="23" cy="12" r="2" /></svg></header>
     <div class="wechat-body">
-      <p class="wechat-time">婚礼前的某一天 17:28</p>
+      <p class="wechat-time">{{ copy.chatTime }}</p>
       <ol>
         <li v-for="(message, index) in messages" :key="index" :class="{ outgoing: message.from === 'groom' }">
           <div class="wechat-avatar" aria-hidden="true">

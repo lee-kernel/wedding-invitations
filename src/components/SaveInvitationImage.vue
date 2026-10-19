@@ -10,7 +10,7 @@ const ready = ref(false), open = ref(false), file = ref<File | null>(null), url 
 const device = ref<Device>('desktop');
 const generating = ref(false);
 const generationFailed = ref(false);
-const originalImageUrl = `${import.meta.env.BASE_URL}images/invitation/invitation-card.png`;
+const originalImageUrl = wedding.invitationImage ? `${import.meta.env.BASE_URL}${wedding.invitationImage}` : '';
 const trigger = ref<HTMLButtonElement | null>(null);
 function currentDevice(): Device { if (/MicroMessenger/i.test(navigator.userAgent)) return 'wechat'; if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios'; if (/Android/i.test(navigator.userAgent)) return 'android'; return 'desktop'; }
 const hint = computed(() => device.value === 'ios' ? '长按图片保存，或在系统菜单中选择“存储图像”。' : device.value === 'android' || device.value === 'wechat' ? '长按图片，选择“保存图片”；也可以直接下载。' : '下载这张邀请，把相聚的时间和地点留在手边。');
@@ -22,6 +22,7 @@ async function prepareImage() {
   try {
     let image: File;
     try {
+      if (!originalImageUrl) throw new Error('Generate invitation from configuration');
       const response = await fetch(originalImageUrl);
       if (!response.ok || !response.headers.get('content-type')?.includes('image/png')) throw new Error('Original PNG unavailable');
       image = new File([await response.blob()], invitationImageName, { type: 'image/png' });
@@ -52,7 +53,7 @@ onBeforeUnmount(() => { if (url.value.startsWith('blob:')) URL.revokeObjectURL(u
     <div class="image-save-summary"><span>{{ wedding.groom }} <i>&amp;</i> {{ wedding.bride }}</span><span>{{ wedding.date }}</span></div>
     <section class="image-save-scroll" tabindex="0" aria-label="邀请图片预览，可滚动或长按保存">
       <KittyAccent class="image-save-bow" variant="bow" />
-      <img v-if="url" class="invitation-image" :src="url" alt="张子乔与陈美嘉诚挚敬邀，2027年1月31日，17:28到场、17:58仪式，黄山市歙县徽苑一楼，2号厅" :width="invitationImageSize.width" :height="invitationImageSize.height" />
+      <img v-if="url" class="invitation-image" :src="url" :alt="`${wedding.groom}与${wedding.bride}诚挚敬邀，${wedding.dateLong}，${wedding.welcome}到场、${wedding.ceremony}仪式，${wedding.address}`" :width="invitationImageSize.width" :height="invitationImageSize.height" />
       <div v-else class="image-save-loading" role="status"><span aria-hidden="true">囍</span><p>{{ generationFailed ? '这份邀请还差最后一笔' : '正在写好这份邀请…' }}</p><small>{{ generationFailed ? '请重试一次，稍后就好' : '把时间、地点和我们的期待，一起装好' }}</small><button v-if="generationFailed" type="button" class="button button-line" @click="prepareImage">重新生成</button></div>
     </section>
     <div class="image-save-actions" :data-device="device"><p class="image-save-hint">{{ hint }}</p><div class="image-save-buttons">

@@ -1,24 +1,10 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
-import { imageSlots } from '@/data/wedding';
+import { albumPhotos as photos, chatMessages as messages } from '@/data/wedding';
 import PhotoSlot from '@/components/PhotoSlot.vue';
 import WechatConversation from '@/components/WechatConversation.vue';
 
 const emit = defineEmits<{ preview: [index: number] }>();
-const photos = [
-  { ...imageSlots.wide, caption: '把喜欢，留在每一帧里。', previewIndex: 4 },
-  { ...imageSlots.close, caption: '镜头再近一点，幸福也是。', previewIndex: 5 },
-  { ...imageSlots.portrait, caption: '最好的风景，是身旁的你。', previewIndex: 0 },
-  { ...imageSlots.focus, caption: '往后的照片，都想和你一起。', previewIndex: 3 },
-];
-const messages = [
-  { from: 'bride', text: '相册选好了吗？要选最好看的。' },
-  { from: 'groom', text: '选好了，每一张都有你。' },
-  { from: 'bride', text: '我是说，我们俩都好看的。' },
-  { from: 'groom', text: '那就都留下，慢慢看。' },
-  { from: 'bride', text: '记得把这份幸福也分享给大家 ♡' },
-  { from: 'groom', text: '往下滑，看看我们的珍藏。' },
-];
 const viewport = ref<HTMLElement | null>(null);
 const selected = ref(0);
 let cleanup: (() => void) | undefined;
